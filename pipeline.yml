@@ -24,6 +24,17 @@ stages:
         script: |
           echo "Stage A, job A1, task 1"
 
+- stage: A2
+  dependsOn : [ A ] #Stages implicitly depend on the previous task, this undoes this
+  jobs:
+  - job: B1
+    steps:
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "Stage B, job B1, task 1"
+
 - stage: B
   dependsOn : [] #Stages implicitly depend on the previous task, this undoes this
   jobs:
@@ -34,3 +45,15 @@ stages:
         targetType: 'inline'
         script: |
           echo "Stage B, job B1, task 1"
+
+- stage: B2
+  dependsOn : [ B ] #Stages implicitly depend on the previous task, this undoes this
+  jobs:
+  - job: B1
+    steps:
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "Stage B, job B1, task 1"
+
