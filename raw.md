@@ -82,6 +82,21 @@ This might actually be something else entirely:
         * this has to be done by hand
 
 * Run the pipeline
+    * Setup the yaml:
+    pool:
+      name: Agents
+
+    stages:
+    - stage: Build
+      jobs:
+      - job: BuildJob
+        steps:
+        - task: Bash@3
+          inputs:
+            targetType: 'inline'
+            script: |
+              echo 'Hello world'
+
     * That should happen automatically
     * might have to change the scale set to have 1 machine on standby
 
