@@ -10,6 +10,14 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          # Write your commands here
-          
-          echo 'Hello world'
+          echo "Stage A, job A1, task 1"
+
+- stage: B
+  jobs:
+  - job: B1
+    steps:
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "Stage B, job B1, task 1"
