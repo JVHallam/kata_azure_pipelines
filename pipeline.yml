@@ -3,6 +3,7 @@ pool:
 
 stages:
 - stage: A
+  dependsOn : []
   jobs:
   - job: A1
     steps:
