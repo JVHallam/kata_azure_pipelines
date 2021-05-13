@@ -6,7 +6,6 @@ stages:
   jobs:
   - job: A1
     steps:
-    steps:
     - task: Bash@3
       inputs:
         targetType: 'inline'
