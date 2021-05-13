@@ -1,11 +1,16 @@
 pool:
   name : VMSS
 
-steps:
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: |
-      # Write your commands here
-      
-      echo 'Hello world'
+stages:
+- stage: A
+  jobs:
+  - job: A1
+    steps:
+    steps:
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+          
+          echo 'Hello world'
