@@ -14,7 +14,7 @@ stages:
           echo "Stage C, job A1, task 1"
 
 - stage: A
-  dependsOn : [ C ]
+  dependsOn : []
   jobs:
   - job: A1
     steps:
@@ -25,7 +25,7 @@ stages:
           echo "Stage A, job A1, task 1"
 
 - stage: B
-  dependsOn : [ C ] #Stages implicitly depend on the previous task, this undoes this
+  dependsOn : [] #Stages implicitly depend on the previous task, this undoes this
   jobs:
   - job: B1
     steps:
