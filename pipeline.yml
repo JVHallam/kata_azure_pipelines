@@ -2,12 +2,10 @@ pool:
   name : linux
 
 parameters:
-- name: Deployments         
+- name: 'siteCodes'
   type: object
-  default:
-    - "a"
-    - "b"
+  default: ['sa01', 'zz04', 'zz09']
 
 steps:
-- ${{ each p in parameters.Deployments }}
+- ${{ each p in parameters.siteCodes }}
   - script: 'echo ${{ p }}'
