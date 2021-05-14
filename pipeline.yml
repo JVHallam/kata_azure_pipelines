@@ -11,7 +11,7 @@ stages:
   displayName: Sandbox SQL database deployments
   jobs:
   - ${{ each siteCode in parameters.siteCodes }}:
-    - job: check
+    - job:
       steps :
       - task : Bash@3
         inputs :
