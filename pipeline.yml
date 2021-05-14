@@ -1,6 +1,24 @@
 pool:
   name : linux
 
+variables:
+- name: one
+  value : 1
+- name: two
+  value : 2
+- name: three
+  value : 3
+- name: four
+  value : 4
+- name: five
+  value : 5
+- name: six
+  value : 6
+- name: seven
+  value : 7
+- name: eight
+  value : 8
+
 stages:
 - stage: first
   dependsOn : []
@@ -11,12 +29,12 @@ stages:
       inputs :
         targetType : "inline"
         script : |
-          echo "Hello World"
+          echo ${{ variables.one }}
     - task : Bash@3
       inputs :
         targetType : "inline"
         script : |
-          echo "Hello World"
+          echo ${{ variables.two }}
 
   - job : jobb
     dependsOn : joba
@@ -25,12 +43,13 @@ stages:
       inputs :
         targetType : "inline"
         script : |
-          echo "Hello World"
+          echo ${{ variables.three }}
+
     - task : Bash@3
       inputs :
         targetType : "inline"
         script : |
-          echo "Hello World"
+          echo ${{ variables.four }}
       
 - stage: second
   dependsOn : []
@@ -41,12 +60,13 @@ stages:
       inputs :
         targetType : "inline"
         script : |
-          echo "Hello World"
+          echo ${{ variables.five }}
+
     - task : Bash@3
       inputs :
         targetType : "inline"
         script : |
-          echo "Hello World"
+          echo ${{ variables.six }}
 
   - job : 
     dependsOn : jobas
@@ -55,12 +75,13 @@ stages:
       inputs :
         targetType : "inline"
         script : |
-          echo "Hello World"
+          echo ${{ variables.seven }}
+
     - task : Bash@3
       inputs :
         targetType : "inline"
         script : |
-          echo "Hello World"
+          echo ${{ variables.eight }}
 
 - stage : final
   dependsOn : 
