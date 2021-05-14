@@ -5,7 +5,7 @@ stages:
 - stage: first
   dependsOn : []
   jobs:
-  - job : 
+  - job : joba
     steps :
     - task : Bash@3
       inputs :
@@ -18,7 +18,8 @@ stages:
         script : |
           echo "Hello World"
 
-  - job : 
+  - job : jobb
+    dependsOn : joba
     steps :
     - task : Bash@3
       inputs :
@@ -34,7 +35,7 @@ stages:
 - stage: second
   dependsOn : []
   jobs:
-  - job : 
+  - job : jobas
     steps :
     - task : Bash@3
       inputs :
@@ -48,6 +49,7 @@ stages:
           echo "Hello World"
 
   - job : 
+    dependsOn : jobas
     steps :
     - task : Bash@3
       inputs :
