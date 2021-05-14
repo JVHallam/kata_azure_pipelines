@@ -19,79 +19,40 @@ variables:
 - name: eight
   value : 8
 
+- name : stageValues
+  value :
+  - 1
+  - 2
+
 stages:
-- stage: first
-  dependsOn : []
-  jobs:
-  - job : joba
-    steps :
-    - task : Bash@3
-      inputs :
-        targetType : "inline"
-        script : |
-          echo ${{ variables.one }}
-    - task : Bash@3
-      inputs :
-        targetType : "inline"
-        script : |
-          echo ${{ variables.two }}
+- ${{ each value in variables.stageValues }}
+  - stage: first
+    dependsOn : []
+    jobs:
+    - job : joba
+      steps :
+      - task : Bash@3
+        inputs :
+          targetType : "inline"
+          script : |
+            echo ${{ variables.one }}
+      - task : Bash@3
+        inputs :
+          targetType : "inline"
+          script : |
+            echo ${{ variables.two }}
 
-  - job : jobb
-    dependsOn : joba
-    steps :
-    - task : Bash@3
-      inputs :
-        targetType : "inline"
-        script : |
-          echo ${{ variables.three }}
+    - job : jobb
+      dependsOn : joba
+      steps :
+      - task : Bash@3
+        inputs :
+          targetType : "inline"
+          script : |
+            echo ${{ variables.three }}
 
-    - task : Bash@3
-      inputs :
-        targetType : "inline"
-        script : |
-          echo ${{ variables.four }}
-      
-- stage: second
-  dependsOn : []
-  jobs:
-  - job : jobas
-    steps :
-    - task : Bash@3
-      inputs :
-        targetType : "inline"
-        script : |
-          echo ${{ variables.five }}
-
-    - task : Bash@3
-      inputs :
-        targetType : "inline"
-        script : |
-          echo ${{ variables.six }}
-
-  - job : 
-    dependsOn : jobas
-    steps :
-    - task : Bash@3
-      inputs :
-        targetType : "inline"
-        script : |
-          echo ${{ variables.seven }}
-
-    - task : Bash@3
-      inputs :
-        targetType : "inline"
-        script : |
-          echo ${{ variables.eight }}
-
-- stage : final
-  dependsOn : 
-  - first
-  - second
-  jobs:
-  - job : 
-    steps :
-    - task : Bash@3
-      inputs:
-        targetType : "inline"
-        script : |
-          echo "Finished!"
+      - task : Bash@3
+        inputs :
+          targetType : "inline"
+          script : |
+            echo ${{ variables.four }}
