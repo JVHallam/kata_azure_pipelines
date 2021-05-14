@@ -11,4 +11,49 @@ stages:
         targetType : "inline"
         script : |
           echo "Hello World"
+    - task : Bash@3
+      inputs :
+        targetType : "inline"
+        script : |
+          echo "Hello World"
+
+  - job : 
+    steps :
+    - task : Bash@3
+      inputs :
+        targetType : "inline"
+        script : |
+          echo "Hello World"
+    - task : Bash@3
+      inputs :
+        targetType : "inline"
+        script : |
+          echo "Hello World"
       
+- stage: second
+  jobs:
+  - job : 
+    steps :
+    - task : Bash@3
+      inputs :
+        targetType : "inline"
+        script : |
+          echo "Hello World"
+    - task : Bash@3
+      inputs :
+        targetType : "inline"
+        script : |
+          echo "Hello World"
+
+  - job : 
+    steps :
+    - task : Bash@3
+      inputs :
+        targetType : "inline"
+        script : |
+          echo "Hello World"
+    - task : Bash@3
+      inputs :
+        targetType : "inline"
+        script : |
+          echo "Hello World"
