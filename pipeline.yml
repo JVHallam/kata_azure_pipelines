@@ -1,21 +1,9 @@
 pool:
   name : linux
 
-variables:
-- name : stageValues
-  value : 
-  - name : "first"
-  - name : "second"
+parameters : 
+  param : [ "a", "b" ]
 
-stages:
-- stage: first
-  dependsOn : []
-  jobs:
-  - job : joba
-    steps :
-    - ${{ each name in variables.stageValue }}
-      - task : Bash@3
-        inputs :
-          targetType : "inline"
-          script : |
-            echo ${{ name }}
+steps:
+- ${{ each p in parameters.param }}
+  - script: 'echo ${{ p }}'
