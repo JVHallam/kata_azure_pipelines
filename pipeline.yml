@@ -19,7 +19,7 @@ variables:
 - name: eight
   value : 8
 - name : stageValues
-  value : 1, 2
+  value : [ 1, 2 ]
 
 stages:
 - ${{ each value in variables.stageValues }}
