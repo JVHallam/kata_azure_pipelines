@@ -3,7 +3,7 @@ pool:
 
 stages:
 - stage: first
-  dependsOn : none
+  dependsOn : []
   jobs:
   - job : 
     steps :
@@ -32,7 +32,7 @@ stages:
           echo "Hello World"
       
 - stage: second
-  dependsOn : none
+  dependsOn : []
   jobs:
   - job : 
     steps :
