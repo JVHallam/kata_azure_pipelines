@@ -3,6 +3,7 @@ pool:
 
 stages:
 - stage: first
+  dependsOn : none
   jobs:
   - job : 
     steps :
@@ -31,6 +32,7 @@ stages:
           echo "Hello World"
       
 - stage: second
+  dependsOn : none
   jobs:
   - job : 
     steps :
@@ -59,7 +61,9 @@ stages:
           echo "Hello World"
 
 - stage : final
-  dependsOn : [ first, second ]
+  dependsOn : 
+  - first
+  - second
   jobs:
   - job : 
     steps :
