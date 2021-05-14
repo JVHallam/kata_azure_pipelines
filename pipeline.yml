@@ -6,6 +6,15 @@ parameters:
   type: object
   default: ['sa01', 'zz04', 'zz09']
 
-steps:
-- ${{ each p in parameters.siteCodes }}
-  - script: 'echo ${{ p }}'
+stages:
+- stage: Sandbox
+  displayName: Sandbox SQL database deployments
+  jobs:
+  - ${{ each siteCode in parameters.siteCodes }}:
+    - job: check
+      steps :
+      - task : Bash@3
+        inputs :
+          targetType : "inline"
+          script : |
+            echo "Hello World"
