@@ -1,9 +1,13 @@
 pool:
   name : linux
 
-parameters : 
-  param : [ "a", "b" ]
+parameters:
+  - name: Deployments         
+    type: object
+    default:
+      - "a"
+      - "b"
 
 steps:
-  - ${{ each p in parameters.param }}
+  - ${{ each p in parameters.Deployments }}
     - script: 'echo ${{ p }}'
