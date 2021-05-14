@@ -2,34 +2,20 @@ pool:
   name : linux
 
 variables:
-- name: one
-  value : 1
-- name: two
-  value : 2
-- name: three
-  value : 3
-- name: four
-  value : 4
-- name: five
-  value : 5
-- name: six
-  value : 6
-- name: seven
-  value : 7
-- name: eight
-  value : 8
 - name : stageValues
-  value : [ 1, 2 ]
+  value : 
+  - "first"
+  - "second"
 
 stages:
 - stage: first
   dependsOn : []
   jobs:
-  - ${{ each value in variables.stageValues }}
-    - job : joba
-      steps :
+  - job : joba
+    steps :
+    - ${{ each name in variables.stageValue }}
       - task : Bash@3
         inputs :
           targetType : "inline"
           script : |
-            echo ${{ value }}
+            echo ${{ name }}
