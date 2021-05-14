@@ -22,14 +22,14 @@ variables:
   value : [ 1, 2 ]
 
 stages:
-- ${{ each value in variables.stageValues }}
-  stage: first
+- stage: first
   dependsOn : []
   jobs:
-  - job : joba
-    steps :
-    - task : Bash@3
-      inputs :
-        targetType : "inline"
-        script : |
-          echo ${{ variables.one }}
+  - ${{ each value in variables.stageValues }}
+    - job : joba
+      steps :
+      - task : Bash@3
+        inputs :
+          targetType : "inline"
+          script : |
+            echo ${{ value }}
