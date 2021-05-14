@@ -4,8 +4,8 @@ pool:
 variables:
 - name : stageValues
   value : 
-  - "first"
-  - "second"
+  - name : "first"
+  - name : "second"
 
 stages:
 - stage: first
