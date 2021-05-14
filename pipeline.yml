@@ -5,5 +5,5 @@ parameters :
   param : [ "a", "b" ]
 
 steps:
-- ${{ each p in parameters.param }}
-  - script: 'echo ${{ p }}'
+  - ${{ each p in parameters.param }}
+    - script: 'echo ${{ p }}'
