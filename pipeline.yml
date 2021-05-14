@@ -23,33 +23,13 @@ variables:
 
 stages:
 - ${{ each value in variables.stageValues }}
-  - stage: first
-    dependsOn : []
-    jobs:
-    - job : joba
-      steps :
-      - task : Bash@3
-        inputs :
-          targetType : "inline"
-          script : |
-            echo ${{ variables.one }}
-      - task : Bash@3
-        inputs :
-          targetType : "inline"
-          script : |
-            echo ${{ variables.two }}
-
-    - job : jobb
-      dependsOn : joba
-      steps :
-      - task : Bash@3
-        inputs :
-          targetType : "inline"
-          script : |
-            echo ${{ variables.three }}
-
-      - task : Bash@3
-        inputs :
-          targetType : "inline"
-          script : |
-            echo ${{ variables.four }}
+  stage: first
+  dependsOn : []
+  jobs:
+  - job : joba
+    steps :
+    - task : Bash@3
+      inputs :
+        targetType : "inline"
+        script : |
+          echo ${{ variables.one }}
