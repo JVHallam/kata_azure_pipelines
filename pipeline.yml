@@ -2,12 +2,12 @@ pool:
   name : linux
 
 parameters:
-  - name: Deployments         
-    type: object
-    default:
-      - "a"
-      - "b"
+- name: Deployments         
+  type: object
+  default:
+    - "a"
+    - "b"
 
 steps:
-  - ${{ each p in parameters.Deployments }}
-    - script: 'echo ${{ p }}'
+- ${{ each p in parameters.Deployments }}
+  - script: 'echo ${{ p }}'
