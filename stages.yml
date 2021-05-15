@@ -5,9 +5,9 @@ parameters:
   # description : "this is a sitecode"
 
 stages:
-- stage: Sandbox_${{siteCode}}
-  displayName: Echo a the site code ${{ siteCode }}
-  condition : not(eq('${{siteCode}}','zz04'))
+- stage: Sandbox_${{ parameters.siteCode }}
+  displayName: Echo a the site code ${{  parameters.siteCode  }}
+  condition : not(eq('${{ parameters.siteCode }}','zz04'))
   jobs:
   - job:
     steps :
@@ -15,4 +15,4 @@ stages:
       inputs :
         targetType : "inline"
         script : |
-          echo "Sitecode : ${{ siteCode }}"
+          echo "Sitecode : ${{  parameters.siteCode  }}"
