@@ -8,7 +8,7 @@ parameters:
 
 stages:
 - ${{ each siteCode in parameters.siteCodes }}:
-  - stage: Sandbox-${{siteCode}}
+  - stage: Sandbox_${{siteCode}}
     displayName: Echo a the site code ${{ siteCode }}
     jobs:
     - job:
