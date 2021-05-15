@@ -2,8 +2,7 @@ pool:
   name : linux
 
 variables:
-- name: 'siteCodes'
-  value: 
+  sitecodes: 
   - sa01
   - zz04
   - zz09
