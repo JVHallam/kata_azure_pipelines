@@ -10,8 +10,7 @@ stages:
 - ${{ each siteCode in parameters.siteCodes }}:
   - template : stages.yml
     parameters : 
-      siteCode : siteCode
-
+      siteCode : ${{ siteCode }}
 
 - ${{ if eq(length(parameters.siteCodes), 3) }}:
   - stage: bonus_stage
