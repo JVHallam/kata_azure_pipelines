@@ -3,8 +3,10 @@ pool:
 
 variables:
 - name: 'siteCodes'
-  type: object
-  value: ['sa01', 'zz04', 'zz09']
+  value: 
+  - sa01
+  - zz04
+  - zz09
 
 
 stages:
