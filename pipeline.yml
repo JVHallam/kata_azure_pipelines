@@ -1,20 +1,32 @@
 pool:
   name : linux
 
+variables:
+- name: one
+  value: initialValue 
+
 stages:
 - stage: first
   jobs:
-    - job: joba
+    - job: run
       steps:
       - task : Bash@3
         inputs : 
           targetType : "inline"
           script : |
-            echo "Setting up the value";
-            echo '##vso[task.setvariable variable=one]first';
+            echo ${{ variables.one }} # outputs initialValue
+            echo $(one)
 
       - task : Bash@3
         inputs : 
           targetType : "inline"
           script : |
-            echo "Echoing the value : $one"
+            echo "Editing the value"
+            echo '##vso[task.setvariable variable=one]secondValue'
+
+      - task : Bash@3
+        inputs : 
+          targetType : "inline"
+          script : |
+            echo ${{ variables.one }} 
+            echo $(one)
