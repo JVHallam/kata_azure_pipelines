@@ -36,14 +36,17 @@ stages:
 
   - job: check
     dependsOn : run
+    variables : 
+      myTest : "this is my test"
     steps:
     - task : Bash@3
       inputs : 
         targetType : "inline"
         script : |
           echo $(one) # outputs initialValue
-          # Try and get this to be secondValue
-          echo $( dependencies.run.outputs )
+          
+          # Try and get this to be newValue
+          echo $(myTest)
 
 - stage: second
   jobs:
