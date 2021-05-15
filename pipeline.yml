@@ -21,9 +21,8 @@ stages:
             echo "Sitecode : ${{ siteCode }}"
 
 - ${{ if eq(length(parameters.siteCodes), 3) }}:
-  - stage: Sandbox_${{siteCode}}
-    displayName: Echo a the site code ${{ siteCode }}
-    condition : not(eq('${{siteCode}}','zz04'))
+  - stage: bonus_stage
+    displayName: Echo a bonus stage value!
     jobs:
     - job:
       steps :
