@@ -1,6 +1,6 @@
 parameters:
-- siteCodeCount:
-    type : number
+- name : siteCodeCount
+  type : number
 
 stages:
 - ${{ if eq(parameters.siteCodeCount ,3)}}:
