@@ -1,9 +1,9 @@
-paramters:
+parameters:
 - siteCodeCount:
     type : number
 
 stages:
-- ${{ if eq(${{ parameters.siteCodeCount }}, 3)}}:
+- ${{ if eq(parameters.siteCodeCount ,3)}}:
   - stage: bonus_stage
     condition : always()
     displayName: Echo a bonus stage value!
