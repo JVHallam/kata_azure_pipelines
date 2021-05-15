@@ -7,6 +7,7 @@ stages:
     - job: joba
       steps:
       - task : Bash@3
-        targetType : "inline"
-        script : |
-          echo "Hello world!"
+        inputs : 
+          targetType : "inline"
+          script : |
+            echo "Hello world!"
