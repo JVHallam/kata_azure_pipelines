@@ -35,13 +35,15 @@ stages:
           echo $(fatbutt.myOutputVar)
 
   - job: check
+    dependsOn : run
     steps:
     - task : Bash@3
       inputs : 
         targetType : "inline"
         script : |
-          # Try and get this to be secondValue
           echo $(one) # outputs initialValue
+          #
+          # Try and get this to be secondValue
           echo $(fatbutt.myOutputVar) #This should be nothing, until we introduce dependencies
 
 - stage: second
