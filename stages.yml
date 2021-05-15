@@ -1,0 +1,18 @@
+
+parameters:
+- name: 'siteCode'
+  type: string
+  # description : "this is a sitecode"
+
+stages:
+- stage: Sandbox_${{siteCode}}
+  displayName: Echo a the site code ${{ siteCode }}
+  condition : not(eq('${{siteCode}}','zz04'))
+  jobs:
+  - job:
+    steps :
+    - task : Bash@3
+      inputs :
+        targetType : "inline"
+        script : |
+          echo "Sitecode : ${{ siteCode }}"
