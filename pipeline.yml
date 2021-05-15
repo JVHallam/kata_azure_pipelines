@@ -1,18 +1,12 @@
 pool:
   name : linux
 
-parameters:
-- name: 'siteCodes'
-  type: object
-  default: ['sa01', 'zz04', 'zz09']
-
 stages:
-- ${{ each siteCode in parameters.siteCodes }}:
-  - template : stages.yml
-    parameters : 
-      siteCode : '${{ siteCode }}'
-
-- template : bonus.yml
-  parameters:
-    siteCodeCount : ${{ length( parameters.siteCodes ) }}
-
+- stage: first
+  jobs:
+    - job: joba
+      steps:
+      - task : Bash@3
+        targetType : "inline"
+        script : |
+          echo "Hello world!"
