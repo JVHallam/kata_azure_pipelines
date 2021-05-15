@@ -12,15 +12,7 @@ stages:
     parameters : 
       siteCode : '${{ siteCode }}'
 
-- ${{ if eq(length(parameters.siteCodes), 3) }}:
-  - stage: bonus_stage
-    condition : always()
-    displayName: Echo a bonus stage value!
-    jobs:
-    - job:
-      steps :
-      - task : Bash@3
-        inputs :
-          targetType : "inline"
-          script : |
-            echo "BONUS STAGE"
+- template : bonus.yml
+  parameters:
+    siteCodeCount : ${{ length( parameters.siteCodes ) }}
+
