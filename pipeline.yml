@@ -22,6 +22,7 @@ stages:
 
 - ${{ if eq(length(parameters.siteCodes), 3) }}:
   - stage: bonus_stage
+    condition : failed()
     displayName: Echo a bonus stage value!
     jobs:
     - job:
