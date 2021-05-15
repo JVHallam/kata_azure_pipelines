@@ -2,10 +2,7 @@ pool:
   name : linux
 
 variables:
-  sitecodes: 
-  - sa01
-  - zz04
-  - zz09
+  sitecodes:  [ sa01 ,zz04 ,zz09 ]
 
 
 stages:
