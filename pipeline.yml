@@ -8,17 +8,10 @@ parameters:
 
 stages:
 - ${{ each siteCode in parameters.siteCodes }}:
-  - stage: Sandbox_${{siteCode}}
-    displayName: Echo a the site code ${{ siteCode }}
-    condition : not(eq('${{siteCode}}','zz04'))
-    jobs:
-    - job:
-      steps :
-      - task : Bash@3
-        inputs :
-          targetType : "inline"
-          script : |
-            echo "Sitecode : ${{ siteCode }}"
+  - template : stages.yml
+    parameters : 
+      siteCode : siteCode
+
 
 - ${{ if eq(length(parameters.siteCodes), 3) }}:
   - stage: bonus_stage
