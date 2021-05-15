@@ -7,14 +7,14 @@ parameters:
   default: ['sa01', 'zz04', 'zz09']
 
 stages:
-- stage: Sandbox
-  displayName: Sandbox SQL database deployments
-  jobs:
-  - ${{ each siteCode in parameters.siteCodes }}:
+- ${{ each siteCode in parameters.siteCodes }}:
+  - stage: Sandbox
+    displayName: Echo a list of sitecodes
+    jobs:
     - job:
       steps :
       - task : Bash@3
         inputs :
           targetType : "inline"
           script : |
-            echo "Hello World"
+            echo "Sitecode : ${{ siteCode }}"
