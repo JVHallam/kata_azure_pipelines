@@ -23,7 +23,8 @@ stages:
         targetType : "inline"
         script : |
           echo "Editing the value"
-          echo '##vso[job.setvariable variable=one;isOutput=true]secondValue'
+          echo '##vso[job.setvariable variable=one]secondValue'
+          echo '##vso[job.setvariable variable=myOutputVar]newValue'
 
     - task : Bash@3
       inputs : 
@@ -31,6 +32,7 @@ stages:
         script : |
           echo ${{ variables.one }} # outputs initialValue
           echo $(one) #outputs secondValue
+          echo $(fatbutt.myOutputVar)
 
   - job: check
     steps:
