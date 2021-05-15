@@ -24,7 +24,7 @@ stages:
         script : |
           echo "Editing the value"
           echo '##vso[task.setvariable variable=one]secondValue'
-          echo '##vso[task.setvariable variable=myOutputVar]newValue'
+          echo '##vso[task.setvariable variable=myOutputVar;isOutput=true]newValue'
 
     - task : Bash@3
       inputs : 
