@@ -22,7 +22,7 @@ stages:
         targetType : "inline"
         script : |
           echo "Editing the value"
-          echo '##vso[task.setvariable variable=one]secondValue'
+          echo '##vso[job.setvariable variable=one]secondValue'
 
     - task : Bash@3
       inputs : 
