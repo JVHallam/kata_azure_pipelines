@@ -42,9 +42,8 @@ stages:
         targetType : "inline"
         script : |
           echo $(one) # outputs initialValue
-          #
           # Try and get this to be secondValue
-          echo $(fatbutt.myOutputVar) #This should be nothing, until we introduce dependencies
+          echo $( dependencies.run.outputs )
 
 - stage: second
   jobs:
