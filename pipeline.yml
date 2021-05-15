@@ -37,7 +37,8 @@ stages:
   - job: check
     dependsOn : run
     variables : 
-      myTest : "this is my test"
+      #myTest : "this is my test"
+      myTest : $[ dependencies.run.outputs ]
     steps:
     - task : Bash@3
       inputs : 
