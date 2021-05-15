@@ -50,6 +50,9 @@ stages:
           echo $(myTest)
 
 - stage: second
+  dependsOn : first
+  variables:
+    fromFirst : $[ stageDependencies.first.run.outputs['fatbutt.myOutputVar'] ]
   jobs:
   - job: check
     steps:
@@ -57,4 +60,5 @@ stages:
       inputs : 
         targetType : "inline"
         script : |
-          echo $(one)# outputs initialValue
+          echo "from first $(fromFirst)"
+          echo $(fromFirst)
