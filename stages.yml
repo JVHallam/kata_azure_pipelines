@@ -2,7 +2,7 @@
 parameters:
 - name: 'siteCode'
   type: string
-  # description : "this is a sitecode"
+  description : "this is a sitecode"
 
 stages:
 - stage: Sandbox_${{ parameters.siteCode }}
