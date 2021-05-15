@@ -1,10 +1,11 @@
 pool:
   name : linux
 
-parameters:
+variables:
 - name: 'siteCodes'
   type: object
-  default: ['sa01', 'zz04', 'zz09']
+  value: ['sa01', 'zz04', 'zz09']
+
 
 stages:
 - ${{ each siteCode in parameters.siteCodes }}:
