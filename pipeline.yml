@@ -38,7 +38,7 @@ stages:
     dependsOn : run
     variables : 
       #myTest : "this is my test"
-      myTest : $[ dependencies.run.outputs ]
+      myTest : $[ dependencies.run.outputs['fatbutt.myOutputVar'] ]
     steps:
     - task : Bash@3
       inputs : 
