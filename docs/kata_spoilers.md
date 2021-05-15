@@ -153,32 +153,12 @@ stages:
 
 ---
 
-# 3) Ifs, fn's and general syntax:
-* conditionals
-* if
-* eq
-* conditional flows
-* Filtered arrays
+# 3) Ifs, fn's, each and general syntax:
 
-# Each 
-* Use 2d arrays, instead of 8 seperate variables
-    stage [ job [ task, task ], job [ task, task ] ]
-    stage [ job [ task, task ], job [ task, task ] ]
-
-* Use each to auto generate 2 stages
-* Use each to auto generate the 2 jobs
-* Use each to auto generate 2 tasks
-
-* Use the array indexes, to get access to the values
-
-* Until you have:
-* 1 stage, 1 job, 1 tasks
-* That generates:
-    * 2 Stages, 4 jobs, 8 tasks
-
-* Followed by 1 more stage, that only runs when the above has finished
-
-# This will generate the fucking stuff i need! YEAH BOI!
+## Each
+* Create an array, parameter
+* Use that with each, to generate 3 stages
+* each stage must depend on the previous stage 
 
 pool:
   name : linux
@@ -189,22 +169,290 @@ parameters:
   default: ['sa01', 'zz04', 'zz09']
 
 stages:
-- stage: Sandbox
-  displayName: Sandbox SQL database deployments
-  jobs:
-  - ${{ each siteCode in parameters.siteCodes }}:
+- ${{ each siteCode in parameters.siteCodes }}:
+  - stage: Sandbox_${{siteCode}}
+    displayName: Echo a the site code ${{ siteCode }}
+    jobs:
     - job:
       steps :
       - task : Bash@3
         inputs :
           targetType : "inline"
           script : |
-            echo "Hello World"
+            echo "Sitecode : ${{ siteCode }}"
+
+
+## Conditionals + stuff
+* Use conditionals to
+    * Skip a stage, if it's value is zz04
+
+condition : not(eq('${{siteCode}}','zz04'))
+
+${{ if eq(length(parameters.siteCodes), 3) }}: # only works if you have a main branch
+- stage:
+
+* Use conditional insertion to
+    * Insert an extra stage, if there's 3 parameters
+    * This just echos "BONUS STAGE GET"
+
+* Run the pipeline with:
+    * sa01, zz04, zz09 -> Should skip one stage ( zz04 ) and create a 4th stage
+    * sa01, zz04, zz09, je03 -> Should have 4 stages, zz04 is skipped, it doesn't have the bonus stage
+
+# Job status check functions
+* Make a job fail by making it run a command, in bash, that doesn't exist
+* Make the bonus stage RUN even if something fails
+
+* condition : always()
+
+## Try and introduce templating here, that'd be nice.
+
+* Create a pair of templates:
+    * One for the siteCode stage generation
+    * One for bonus stage
+
+* When ran, these templates should result in the same thing as the first kata
+
+```yml
+# main pipeline yml
+pool:
+  name : linux
+
+parameters:
+- name: 'siteCodes'
+  type: object
+  default: ['sa01', 'zz04', 'zz09']
+
+stages:
+- ${{ each siteCode in parameters.siteCodes }}:
+  - template : stages.yml
+    parameters : 
+      siteCode : '${{ siteCode }}'
+
+- template : bonus.yml
+  parameters:
+    siteCodeCount : ${{ length( parameters.siteCodes ) }}
+```
+
+```yml
+# stages.yml
+parameters:
+- name: 'siteCode'
+  type: string
+  # description : "this is a sitecode"
+
+stages:
+- stage: Sandbox_${{ parameters.siteCode }}
+  displayName: Echo a the site code ${{  parameters.siteCode  }}
+  condition : not(eq('${{ parameters.siteCode }}','zz04'))
+  jobs:
+  - job:
+    steps :
+    - task : Bash@3
+      inputs :
+        targetType : "inline"
+        script : |
+          echo "Sitecode : ${{  parameters.siteCode  }}"
+```
+
+```yml
+# Bonus yml
+
+parameters:
+- name : siteCodeCount
+  type : number
+
+stages:
+- ${{ if eq(parameters.siteCodeCount ,3)}}:
+  - stage: bonus_stage
+    condition : always()
+    displayName: Echo a bonus stage value!
+    jobs:
+    - job:
+      steps :
+      - task : Bash@3
+        inputs :
+          targetType : "inline"
+          script : |
+            echo "BONUS STAGE"
+```
+
+---
 
 
 # 4) Variables + templates
-* Templates
-* parameters
+
+## What i need from this stage
+
+# Passing around environment variables
+
+* How to set these during a stage
+* How to echo these in the next stage
+
+* They're shared between tasks?
+* They're shared between jobs?
+* They're shared between stages?
+
+* Create a task that sets up the environment variables
+* Create a task that echos out the same environment variable
+* Create a second job to echo that out too
+
+* job1, task1 -> set's it up
+* job1, task2 -> Echos the value
+* job2, task1 -> also echos the value
+* stage2, job1, task1 -> also echos the value
+
+# Setting a variable:
+* Have a stage that echo s
+
+pool:
+  name : linux
+
+variables:
+- name: one
+  value: initialValue 
+
+stages:
+- stage: first
+  jobs:
+  - job: run
+    steps:
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+          echo ${{ variables.one }} # outputs initialValue
+          echo $(one)
+
+    - task : Bash@3
+      name : fatbutt
+      inputs : 
+        targetType : "inline"
+        script : |
+          echo "Editing the value"
+          echo '##vso[job.setvariable variable=one]secondValue'
+
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+          echo ${{ variables.one }} # outputs initialValue
+          echo $(one) #outputs secondValue
+
+  - job: check
+    steps:
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+          echo $(one) # outputs initialValue
+
+- stage: second
+  jobs:
+  - job: check
+    steps:
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+          echo $(one)# outputs initialValue
+
+
+${{ }} - Is templated - (${{ variables.var }}) get processed at compile time
+($(var)) get processed during runtime before a task runs
+Runtime expressions ($[variables.var]) also get processed during runtime
+
+# Passing OUT variables, on a job level, tasks already have them set
+* alongisde the other one
+  * echo '##vso[task.setvariable variable=myOutputVar;isOutput=true]newValue'
+
+* give the task that runs that a name
+  * name : fatbutt
+
+* Introduce this to the check task ( not the check job )
+    * echo $(fatbutt.myOutputVar)
+
+* Run and check that it works
+    - task : Bash@3
+      name : fatbutt
+      inputs : 
+        targetType : "inline"
+        script : |
+          echo "Editing the value"
+          echo '##vso[task.setvariable variable=one]secondValue'
+          echo '##vso[task.setvariable variable=myOutputVar;isOutput=true]newValue'
+
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+          echo ${{ variables.one }} # outputs initialValue
+          echo $(one) #outputs secondValue
+          echo $(fatbutt.myOutputVar) # This right here, should be newValue
+
+# Variable changes are scoped to a job level, not passed between jobs, unless you use outputs
+
+# Passing OUT variables, on a job level
+  - job: run
+    steps:
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+          echo ${{ variables.one }} # outputs initialValue
+          echo $(one)
+
+    - task : Bash@3
+      name : fatbutt
+      inputs : 
+        targetType : "inline"
+        script : |
+          echo "Editing the value"
+          echo '##vso[task.setvariable variable=one]secondValue'
+          echo '##vso[task.setvariable variable=myOutputVar;isOutput=true]newValue'
+
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+          echo ${{ variables.one }} # outputs initialValue
+          echo $(one) #outputs secondValue
+          echo $(fatbutt.myOutputVar)
+
+  - job: check
+    dependsOn : run
+    variables : 
+      #myTest : "this is my test"
+      myTest : $[ dependencies.run.outputs['fatbutt.myOutputVar'] ]
+    steps:
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+          echo $(one) # outputs initialValue
+          
+          # Try and get this to be newValue
+          echo $(myTest)
+
+# Passing OUT variables, on a stage level
+
+- stage: second
+  dependsOn : first
+  variables:
+    fromFirst : $[ stageDependencies.first.run.outputs['fatbutt.myOutputVar'] ]
+  jobs:
+  - job: check
+    steps:
+    - checkout : none
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+          echo "from first $(fromFirst)"
+          echo $(fromFirst)
+
+# Passing OUT variables, from templates?
+* THE SAME THING AS ABOVE, but just have it in another file
 
 * passing variables around:
     * output variables
@@ -221,3 +469,42 @@ stages:
 * Extra commands:
     * artifacts
     * logging commands
+
+## Something else
+
+[
+    { "id": 1, "a": "avalue1"},
+    { "id": 2, "a": "avalue2"},
+    { "id": 3, "a": "avalue3"}
+]
+
+foo.*.id
+It uses splat expressions!
+
+#conditional insertion
+  ${{ if eq(variables['Build.SourceBranchName'], 'main') }}: # only works if you have a main branch
+    stageName: prod
+
+
+# This will generate the fucking stuff i need! YEAH BOI!
+
+pool:
+  name : linux
+
+parameters:
+- name: 'siteCodes'
+  type: object
+  default: ['sa01', 'zz04', 'zz09']
+
+stages:
+- ${{ each siteCode in parameters.siteCodes }}:
+  - stage: Sandbox_${{siteCode}}
+    displayName: Echo a the site code ${{ siteCode }}
+    jobs:
+    - job:
+      steps :
+      - task : Bash@3
+        inputs :
+          targetType : "inline"
+          script : |
+            echo "Sitecode : ${{ siteCode }}"
