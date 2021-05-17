@@ -1,26 +1,14 @@
 pool:
   name : linux
 
-variables:
-- name: one
-  value: initialValue 
-
-
 stages:
-- template : extra.yml
-
-#If this works, i'll COOM
-- stage: second
-  dependsOn : first
-  variables:
-    fromFirst : $[ stageDependencies.first.run.outputs['fatbutt.myOutputVar'] ]
+- stage: first
   jobs:
-  - job: check
+  - job: echo
     steps:
     - checkout : none
     - task : Bash@3
       inputs : 
         targetType : "inline"
         script : |
-          echo "from first $(fromFirst)"
-          echo $(fromFirst)
+            echo "baka mitai"
