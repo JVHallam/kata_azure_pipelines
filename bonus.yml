@@ -1,0 +1,12 @@
+stages:
+- stage: bonus
+  condition : always()
+  jobs: 
+  - job: echo
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs: 
+        targetType: "inline"
+        script: |
+          echo "BONUS GET"
