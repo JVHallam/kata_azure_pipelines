@@ -4,11 +4,64 @@ pool:
 stages:
 - stage: first
   jobs:
-  - job: echo
+  - job: echo_one
     steps:
     - checkout : none
     - task : Bash@3
       inputs : 
         targetType : "inline"
         script : |
-            echo "baka mitai"
+            echo "first - echo_one - 1"
+
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+            echo "first - echo_one - 2"
+
+  - job: echo_two
+    steps:
+    - checkout : none
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+            echo "first - echo_two - 1"
+
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+            echo "first - echo_two - 2"
+
+- stage: second
+  jobs:
+  - job: echo_one
+    steps:
+    - checkout : none
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+            echo "second - echo_one - 1"
+
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+            echo "second - echo_one - 2"
+
+  - job: echo_two
+    steps:
+    - checkout : none
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+            echo "second - echo_two - 1"
+
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+            echo "second - echo_two - 2"
