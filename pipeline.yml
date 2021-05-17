@@ -10,7 +10,7 @@ parameters:
   - je03
 
 stages:
-${{ each siteCode in parameters.siteCodes }}
+- ${{ each siteCode in parameters.siteCodes }}
   - stage: Sandbox_${{ siteCode }
     jobs: 
     - job: echo
