@@ -1,14 +1,24 @@
 
 # 1) Setup a pipeline
 
-* Create a scale set
-    * Do this via the portal, the terraform is a nightmare
+## Create a scale set
+* Do this via the portal
+* Use an ubuntu image
+* Standard_B2s
 
-* Create an agent pool, attaching it to the VMSS
+## Create an agent pool
+* Create the agent pool
+    * 30 minutes idle, max 2 vm's, have 0 on standby
+* Attach it to the vmss
 
-* Create a pipeline
+## Create a pipeline
+* Create the yaml, in a repo
+* Create the pipeline, attached to that
+* Have the pipeline echo "Hello world"
+* Make sure not to clone the repo either
 
 * Hello world
+```yml
 pool:
   name: Agents
 
@@ -17,16 +27,20 @@ stages:
   jobs:
   - job: BuildJob
     steps:
+    - checkout : none
     - task: Bash@3
       inputs:
         targetType: 'inline'
         script: |
           echo 'Hello world'
+```
 
-* Teardown
-    * Delete the pipeline
-    * Delete the agent pool
-    * Do this all at the organization level. Right at the top
+# Tear it down ( Optional )
+* Delete the pipeline
+* Delete the agent pool
+* Delete the vmss
+* Do this all at an agent level
+
 
 ---
 
@@ -46,9 +60,12 @@ stages:
 * Create two stages
     * that has a pair of jobs
         * both have a pair of tasks
-        * Echo a unique value ( the value 1 through 100 or something )
+        * Echo a unique value ( the name of the stage + the job name + a hard coded value )
+            * e.g. echo "first - echo_one - 2"
+        * hardcode everything, don't use templating 
+        * add one final task to skip checkout
 
-* That's a total of:
+* In That's a total of:
     * 2 stages
     * 4 jobs
     * 8 tasks
@@ -56,7 +73,7 @@ stages:
 * Make the second stage run AFTER the first stage
 
 ## Parallel jobs / parallel stages
-* Make each stage run in parallel
+* Make stage one and stage two, run in parallel
 * Create a third stage, that only runs when the other 2 have stopped
 * The jobs HOWEVER must run in serial, within their stage
 
@@ -65,90 +82,90 @@ stages:
     * Jobs A and Jobs B, within stage A, should run one AFTER the other
     * Stage C should run only once Stage A and Stage B have completed
 
-# Variables
-* Create 8 variables
-* each job has it's own variable
-    * Templating variables
-        * echo "${ this shit }"
-
-
-## The final product
-
 ```yml
 pool:
   name : linux
 
 stages:
 - stage: first
-  dependsOn : []
   jobs:
-  - job : 
-    steps :
+  - job: echo_one
+    steps:
+    - checkout : none
     - task : Bash@3
-      inputs :
+      inputs : 
         targetType : "inline"
         script : |
-          echo "Hello World"
-    - task : Bash@3
-      inputs :
-        targetType : "inline"
-        script : |
-          echo "Hello World"
+            echo "first - echo_one - 1"
 
-  - job : 
-    steps :
     - task : Bash@3
-      inputs :
+      inputs : 
         targetType : "inline"
         script : |
-          echo "Hello World"
+            echo "first - echo_one - 2"
+
+  - job: echo_two
+    dependsOn : echo_one
+    steps:
+    - checkout : none
     - task : Bash@3
-      inputs :
+      inputs : 
         targetType : "inline"
         script : |
-          echo "Hello World"
-      
+            echo "first - echo_two - 1"
+
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+            echo "first - echo_two - 2"
+
 - stage: second
   dependsOn : []
   jobs:
-  - job : 
-    steps :
+  - job: echo_one
+    steps:
+    - checkout : none
     - task : Bash@3
-      inputs :
+      inputs : 
         targetType : "inline"
         script : |
-          echo "Hello World"
-    - task : Bash@3
-      inputs :
-        targetType : "inline"
-        script : |
-          echo "Hello World"
+            echo "second - echo_one - 1"
 
-  - job : 
-    steps :
     - task : Bash@3
-      inputs :
+      inputs : 
         targetType : "inline"
         script : |
-          echo "Hello World"
-    - task : Bash@3
-      inputs :
-        targetType : "inline"
-        script : |
-          echo "Hello World"
+            echo "second - echo_one - 2"
 
-- stage : final
+  - job: echo_two
+    dependsOn : echo_one
+    steps:
+    - checkout : none
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+            echo "second - echo_two - 1"
+
+    - task : Bash@3
+      inputs : 
+        targetType : "inline"
+        script : |
+            echo "second - echo_two - 2"
+
+- stage : third
   dependsOn : 
-  - first
-  - second
+    - first
+    - second
   jobs:
-  - job : 
-    steps :
-    - task : Bash@3
-      inputs:
-        targetType : "inline"
-        script : |
-          echo "Finished!"
+    - job : final
+      steps:
+      - task : Bash@3
+        inputs : 
+          targetType : "inline"
+          script : |
+            echo "final"
 ```
 
 ---
@@ -156,17 +173,21 @@ stages:
 # 3) Ifs, fn's, each and general syntax:
 
 ## Each
-* Create an array, parameter
+* Create a parameter:
+    * make it an array 
+    * call it "siteCodes"
+    * give it the default value of : zz01, zz04, je03
+       
 * Use that with each, to generate 3 stages
-* each stage must depend on the previous stage 
 
+```yml
 pool:
   name : linux
 
 parameters:
 - name: 'siteCodes'
   type: object
-  default: ['sa01', 'zz04', 'zz09']
+  default: ['zz01', 'zz04', 'je03']
 
 stages:
 - ${{ each siteCode in parameters.siteCodes }}:
@@ -180,28 +201,31 @@ stages:
           targetType : "inline"
           script : |
             echo "Sitecode : ${{ siteCode }}"
+```
 
-
-## Conditionals + stuff
-* Use conditionals to
-    * Skip a stage, if it's value is zz04
+## Conditions
+* Give the stage block a condition
+* Skip a stage, if it's value is zz04
 
 condition : not(eq('${{siteCode}}','zz04'))
 
-${{ if eq(length(parameters.siteCodes), 3) }}: # only works if you have a main branch
-- stage:
+## Conditional stage insertion:
 
 * Use conditional insertion to
     * Insert an extra stage, if there's 3 parameters
     * This just echos "BONUS STAGE GET"
 
-* Run the pipeline with:
-    * sa01, zz04, zz09 -> Should skip one stage ( zz04 ) and create a 4th stage
-    * sa01, zz04, zz09, je03 -> Should have 4 stages, zz04 is skipped, it doesn't have the bonus stage
+${{ if eq(length(parameters.siteCodes), 3) }}: # only works if you have a main branch
+- stage:
 
-# Job status check functions
-* Make a job fail by making it run a command, in bash, that doesn't exist
-* Make the bonus stage RUN even if something fails
+* Run the pipeline with:
+    * sa01, zz09, je03         -> Should have 4 stages ( including the bonus )
+    * The default 3 site codes -> Should skip one stage ( zz04 ) and create a 4th stage, the bonus stage will skip
+    * sa01, zz04, zz09, je03   -> Should have 4 stages, zz04 is skipped, it doesn't have the bonus stage
+
+## Job status check functions
+* Run the pipeline with the defaults ( including zz04 )
+* Make the bonus stage RUN even if something fails, by adding a condition
 
 * condition : always()
 
@@ -239,7 +263,6 @@ stages:
 parameters:
 - name: 'siteCode'
   type: string
-  # description : "this is a sitecode"
 
 stages:
 - stage: Sandbox_${{ parameters.siteCode }}
