@@ -12,7 +12,7 @@ parameters:
 stages:
 ${{ each siteCode in parameters.siteCodes }}
   - stage: Sandbox_${{ siteCode }
-    jobs:
+    jobs: 
     - job: echo
       steps:
       - checkout: none
