@@ -1,5 +1,4 @@
-
-paramters:
+parameters:
   - name: siteCode
     type: string
 
