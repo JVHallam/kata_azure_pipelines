@@ -203,11 +203,6 @@ stages:
             echo "Sitecode : ${{ siteCode }}"
 ```
 
-## Conditions
-* Give the stage block a condition
-* Skip a stage, if it's value is zz04
-
-condition : not(eq('${{siteCode}}','zz04'))
 
 ## Conditional stage insertion:
 
@@ -222,6 +217,16 @@ condition : not(eq('${{siteCode}}','zz04'))
     * sa01, zz09, je03         -> Should have 4 stages ( including the bonus )
     * The default 3 site codes -> Should skip one stage ( zz04 ) and create a 4th stage, the bonus stage will skip
     * sa01, zz04, zz09, je03   -> Should have 4 stages, zz04 is skipped, it doesn't have the bonus stage
+
+## Conditions
+* Give the stage block a condition
+* Skip a stage, if it's value is zz04
+
+* Run the pipeline with the defaults ( 3, including zz04 )
+    * Note that zz04 skips
+    * Note that bonus is skipped
+
+condition : not(eq('${{siteCode}}','zz04'))
 
 ## Job status check functions
 * Run the pipeline with the defaults ( including zz04 )
