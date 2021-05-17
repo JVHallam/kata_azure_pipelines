@@ -215,8 +215,8 @@ condition : not(eq('${{siteCode}}','zz04'))
     * Insert an extra stage, if there's 3 parameters
     * This just echos "BONUS STAGE GET"
 
-${{ if eq(length(parameters.siteCodes), 3) }}: # only works if you have a main branch
-- stage:
+- ${{ if eq(length(parameters.siteCodes), 3) }}: 
+    - stage:
 
 * Run the pipeline with:
     * sa01, zz09, je03         -> Should have 4 stages ( including the bonus )
