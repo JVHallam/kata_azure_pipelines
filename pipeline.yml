@@ -11,7 +11,7 @@ parameters:
 
 stages:
 ${{ each siteCode in parameters.siteCodes }}
-- stage: My_stage_${{ siteCode }
+- stage: Sandbox_${{ siteCode }
   jobs:
   - job: echo
     steps:
