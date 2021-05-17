@@ -1,5 +1,5 @@
 pool:
-  name : linux
+  name: linux
 
 parameters:
 - name: siteCodes
@@ -11,8 +11,7 @@ parameters:
 
 stages:
 ${{ each siteCode in parameters.siteCodes }}
-- stage: stage_${{ siteCode }}
-  displayName: Echo a the site code ${{ siteCode }}
+- stage: My_stage_${{ siteCode }}
   jobs:
   - job: echo
     steps:
