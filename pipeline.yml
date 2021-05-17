@@ -20,15 +20,16 @@ stages:
         inputs: 
           targetType: "inline"
           script: |
-            echo "Site Code : je03"
+            echo "Site Code : ${{ siteCode }}"
+
 - ${{ if eq(length(parameters.siteCodes), 3) }}: 
   - stage: bonus
     jobs: 
-    - job:
+    - job: echo
       steps:
+      - checkout: none
       - task: Bash@3
-        inputs:
-          - targetType : 'inline'
-          - script : |
-            echo "Hello world!"
-        
+        inputs: 
+          targetType: "inline"
+          script: |
+            echo "Site Code : je03"
