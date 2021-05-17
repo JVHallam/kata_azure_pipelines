@@ -235,13 +235,19 @@ condition : not(eq('${{siteCode}}','zz04'))
 
 * condition : always()
 
-## Try and introduce templating here, that'd be nice.
+## Templating
 
 * Create a pair of templates:
-    * One for the siteCode stage generation
-    * One for bonus stage
+    * One for the siteCode stage, 
+        * parameters:
+            * siteCode ( singular )
 
-* When ran, these templates should result in the same thing as the first kata
+        * Leave the each in the main template
+
+    * One for bonus stage
+        * Leave the conditional in the main template
+
+* When ran, these templates should result in the same thing as before
 
 ```yml
 # main pipeline yml
