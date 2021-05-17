@@ -4,7 +4,7 @@ pool:
 parameters:
 - name : siteCodes
   type : object 
-  default : [ 'zz01', 'zz04, 'je03' ]
+  default : [ 'zz01', 'zz04', 'je03' ]
 
 stages:
 ${{ each siteCode in parameters.siteCodes }}
