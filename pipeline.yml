@@ -76,7 +76,7 @@ stages:
   jobs:
     - job : final
       steps:
-        task : Bash@3
+      - task : Bash@3
         inputs : 
           targetType : "inline"
           script : |
