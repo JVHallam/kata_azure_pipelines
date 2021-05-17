@@ -226,6 +226,7 @@ condition : not(eq('${{siteCode}}','zz04'))
 ## Job status check functions
 * Run the pipeline with the defaults ( including zz04 )
 * Make the bonus stage RUN even if something fails, by adding a condition
+* As of right now, if something is skipped, it is skipped
 
 * condition : always()
 
