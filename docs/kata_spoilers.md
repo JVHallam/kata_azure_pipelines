@@ -250,66 +250,62 @@ condition : not(eq('${{siteCode}}','zz04'))
 * When ran, these templates should result in the same thing as before
 
 ```yml
-# main pipeline yml
+# Main pipeline yml
 pool:
-  name : linux
+  name: linux
 
 parameters:
-- name: 'siteCodes'
-  type: object
-  default: ['sa01', 'zz04', 'zz09']
+- name: siteCodes
+  type: object 
+  default: 
+  - zz01
+  - zz04
+  - je03
 
 stages:
 - ${{ each siteCode in parameters.siteCodes }}:
-  - template : stages.yml
-    parameters : 
-      siteCode : '${{ siteCode }}'
+  - template: stages.yml 
+    parameters:
+      siteCode : "${{siteCode}}"
 
-- template : bonus.yml
-  parameters:
-    siteCodeCount : ${{ length( parameters.siteCodes ) }}
+- ${{ if eq(length(parameters.siteCodes), 3) }}: 
+  - template : bonus.yml
 ```
 
 ```yml
-# stages.yml
+# Stages.yml
 parameters:
-- name: 'siteCode'
-  type: string
+  - name: siteCode
+    type: string
 
 stages:
-- stage: Sandbox_${{ parameters.siteCode }}
-  displayName: Echo a the site code ${{  parameters.siteCode  }}
-  condition : not(eq('${{ parameters.siteCode }}','zz04'))
-  jobs:
-  - job:
-    steps :
-    - task : Bash@3
-      inputs :
-        targetType : "inline"
-        script : |
-          echo "Sitecode : ${{  parameters.siteCode  }}"
+- stage: Sandbox_${{ parameters.siteCode}}
+  condition : not(eq('${{ parameters.siteCode}}','zz04'))
+  jobs: 
+  - job: echo
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs: 
+        targetType: "inline"
+        script: |
+          echo "Site Code : ${{ parameters.siteCode }}"
 ```
 
 ```yml
 # Bonus yml
-
-parameters:
-- name : siteCodeCount
-  type : number
-
 stages:
-- ${{ if eq(parameters.siteCodeCount ,3)}}:
-  - stage: bonus_stage
-    condition : always()
-    displayName: Echo a bonus stage value!
-    jobs:
-    - job:
-      steps :
-      - task : Bash@3
-        inputs :
-          targetType : "inline"
-          script : |
-            echo "BONUS STAGE"
+- stage: bonus
+  condition : always()
+  jobs: 
+  - job: echo
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs: 
+        targetType: "inline"
+        script: |
+          echo "BONUS GET"
 ```
 
 ---
