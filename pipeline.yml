@@ -11,12 +11,13 @@ parameters:
 
 stages:
 - ${{ each siteCode in parameters.siteCodes }}:
-  - stage: Sandbox_${{siteCode}}
-    jobs:
-    - job:
-      steps :
-      - task : Bash@3
-        inputs :
-          targetType : "inline"
-          script : |
-            echo "Sitecode : ${{ siteCode }}"
+  - stage: Sandbox_${{ siteCode }
+    jobs: 
+    - job: echo
+      steps:
+      - checkout: none
+      - task: Bash@3
+        inputs: 
+          targetType: "inline"
+          script: |
+            echo "Site Code : je03"
