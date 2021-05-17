@@ -2,7 +2,7 @@ pool:
   name : linux
 
 parameters:
-- name : siteCodes
+- name : 'siteCodes;
   type : object 
   default : [ 'zz01', 'zz04', 'je03' ]
 
