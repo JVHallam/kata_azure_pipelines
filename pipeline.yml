@@ -1,83 +1,21 @@
 pool:
   name : linux
 
+parameters:
+- name : siteCodes
+  type : object 
+  default : [ 'zz01', 'zz04, 'je03' ]
+
 stages:
-- stage: first
+${{ each siteCode in parameters.siteCodes }}
+- stage: stage_${{ siteCode }}
+  displayName: Echo a the site code ${{ siteCode }}
   jobs:
-  - job: echo_one
+  - job: echo
     steps:
     - checkout : none
     - task : Bash@3
       inputs : 
         targetType : "inline"
         script : |
-            echo "first - echo_one - 1"
-
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-            echo "first - echo_one - 2"
-
-  - job: echo_two
-    dependsOn : echo_one
-    steps:
-    - checkout : none
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-            echo "first - echo_two - 1"
-
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-            echo "first - echo_two - 2"
-
-- stage: second
-  dependsOn : []
-  jobs:
-  - job: echo_one
-    steps:
-    - checkout : none
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-            echo "second - echo_one - 1"
-
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-            echo "second - echo_one - 2"
-
-  - job: echo_two
-    dependsOn : echo_one
-    steps:
-    - checkout : none
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-            echo "second - echo_two - 1"
-
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-            echo "second - echo_two - 2"
-
-- stage : third
-  dependsOn : 
-    - first
-    - second
-  jobs:
-    - job : final
-      steps:
-      - task : Bash@3
-        inputs : 
-          targetType : "inline"
-          script : |
-            echo "final"
+            echo "Site Code : ${{ siteCode }}"
