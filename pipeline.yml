@@ -10,8 +10,8 @@ parameters:
   - je03
 
 stages:
-${{ each siteCode in parameters.siteCodes }}
-- stage: My_stage_${{ siteCode }}
+# ${{ each siteCode in parameters.siteCodes }}
+- stage: My_stage_je03
   jobs:
   - job: echo
     steps:
@@ -20,4 +20,4 @@ ${{ each siteCode in parameters.siteCodes }}
       inputs : 
         targetType : "inline"
         script : |
-            echo "Site Code : ${{ siteCode }}"
+            echo "Site Code : je03"
