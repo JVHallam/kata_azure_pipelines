@@ -69,3 +69,117 @@
 
 # 3) Ifs, fn's, each and general syntax:
 
+## Each
+* Create a parameter:
+    * make it an array 
+    * call it "siteCodes"
+    * give it the default value of : zz01, zz04, je03
+       
+* Use that with each, to generate 3 stages
+
+## Conditional stage insertion:
+
+* Use conditional insertion to
+    * Insert an extra stage, if there's 3 parameters
+    * This just echos "BONUS STAGE GET"
+
+* Run the pipeline with:
+    * sa01, zz09, je03         -> Should have 4 stages ( including the bonus )
+    * The default 3 site codes -> Should skip one stage ( zz04 ) and create a 4th stage, the bonus stage will skip
+    * sa01, zz04, zz09, je03   -> Should have 4 stages, zz04 is skipped, it doesn't have the bonus stage
+
+## Conditions
+* Give the stage block a condition
+* Skip a stage, if it's value is zz04
+
+* Run the pipeline with the defaults ( 3, including zz04 )
+    * Note that zz04 skips
+    * Note that bonus is skipped
+
+## Job status check functions
+* Run the pipeline with the defaults ( including zz04 )
+* Make the bonus stage RUN even if something fails, by adding a condition
+* As of right now, if something is skipped, it is skipped
+
+## Templating
+
+* Create a pair of templates:
+    * One for the siteCode stage, 
+        * parameters:
+            * siteCode ( singular )
+
+        * Leave the each in the main template
+
+    * One for bonus stage
+        * Leave the conditional in the main template
+
+* When ran, these templates should result in the same thing as before
+
+
+
+---
+
+
+# 4) Variables + templates
+
+* passing them out of tasks
+* passing them out of jobs
+* passing them out of stages
+* passing them out of templates
+
+# Setting up:
+* Have a stage that echos
+* Create a variable, called holder, with a string value, with a default of "Initial Value"
+
+* Create:
+    * A stage
+        * A job
+            * A task that echos the variables compile time value
+            * A task that sets the variables value to "Updated Value"
+            * A task that echos the variables compile time value, and run time value
+
+        * A job:
+            * A task that echos the variables run time value
+                  echo "${{ variables.holder }}"
+
+    * A stage:
+        * A task that echos the run time value
+
+* Tests:
+    * When ran, the pipeline stages should show:
+        * Stage A - Job 1 - task 1:
+            * Initial Value
+            * Initial Value
+
+        * Stage A - Job 1 - task 3:
+            * Initial Value
+            * Updated Value
+
+        * Stage A - Job 2 - task 1:
+            * Initial Value
+
+        * Stage B - Job 1 - task 1:
+            * Initial Value
+
+
+
+# Variable changes are scoped to a job level, not passed between jobs, unless you use outputs
+* Setup the out variable, to pass it from Stage 1, job 1, to stage 1, job 2
+    echo "##vso[task.setvariable variable=holder;isOutput=true]Updated Value"
+
+* Update the echo task, to also keep it echoing the updated value
+    * stage 1, job 1, task 3 -> Keep it echoing:
+        * Initial Value
+        * Updated Value
+
+* Update stage 1, job 2, task 1 -> Have it echo the stuff
+
+# Passing OUT variables, on a stage level
+* name both stages
+* make stage 2, depend on stage 1
+* Declare a stage variable, called from first
+* Grab the output variable from the first
+
+# Passing OUT variables, from templates?
+* Isolate the first stage into a template file
+* Nothing should change, it should still continue to work fine
