@@ -341,6 +341,22 @@ stages:
     * A stage:
         * A task that echos the run time value
 
+* Tests:
+    * When ran, the pipeline stages should show:
+        * Stage A - Job 1 - task 1:
+            * Initial Value
+            * Initial Value
+
+        * Stage A - Job 1 - task 3:
+            * Initial Value
+            * Updated Value
+
+        * Stage A - Job 2 - task 1:
+            * Initial Value
+
+        * Stage B - Job 1 - task 1:
+            * Initial Value
+
 ```yml
 pool:
   name : linux
