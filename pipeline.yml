@@ -38,6 +38,7 @@ stages:
     steps:
     - checkout: none
     - task: Bash@3
+      name : echovar
       inputs:
         targetType: "inline"
         script: |
