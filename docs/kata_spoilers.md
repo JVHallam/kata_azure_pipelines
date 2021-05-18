@@ -328,7 +328,7 @@ stages:
             * A task that echos the variables compile time value, and run time value
 
                   echo "${{ variables.holder }}"
-                  echo "$[ variables.holder ]"
+                  echo "$( holder )"
 
             * A task that sets the variables value to "Updated Value"
                   echo '##vso[job.setvariable variable=holder]Updated Value'
