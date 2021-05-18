@@ -8,7 +8,7 @@ variables:
 stages:
 - stage:
   jobs: 
-  - job: joba
+  - job: run
     steps:
     - checkout: none
     - task: Bash@3
@@ -31,19 +31,18 @@ stages:
           echo "${{ variables.holder }}"
           echo $(fatbutt.myOutputVar)
 
-  - job: jobb
-    dependsOn: joba
+  - job: check
+    dependsOn: run
     variables:
-      myTest: $[ dependencies.joba.outputs['fatbutt.myOutputVar'] ]
+      myTest: $[ dependencies.run.outputs['fatbutt.myOutputVar'] ]
     steps:
     - checkout: none
     - task: Bash@3
-      name : echovar
       inputs:
         targetType: "inline"
         script: |
           echo "${{ variables.holder }}"
-          echo $( myTest )
+          echo $(myTest)
 
 - stage:
   jobs: 
