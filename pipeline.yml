@@ -21,7 +21,7 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-          echo '##vso[job.setvariable variable=holder]Updated Value'
+          echo '##vso[job.setvariable variable=holder]UpdatedValue'
 
     - task: Bash@3
       inputs:
