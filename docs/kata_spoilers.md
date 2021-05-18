@@ -419,13 +419,9 @@ stages:
 ```
 
 
-${{ }} - Is templated - (${{ variables.var }}) get processed at compile time
-($(var)) get processed during runtime before a task runs
-Runtime expressions ($[variables.var]) also get processed during runtime
-
-# Passing OUT variables, on a job level, tasks already have them set
-* alongisde the other one
-  * echo '##vso[task.setvariable variable=myOutputVar;isOutput=true]newValue'
+# Passing OUT variables, on a job level
+* Update the setvariable to be an output variable
+  * echo '##vso[task.setvariable variable=myOutputVar;isOutput=true]Updated Value'
 
 * give the task that runs that a name
   * name : fatbutt
@@ -434,13 +430,14 @@ Runtime expressions ($[variables.var]) also get processed during runtime
     * echo $(fatbutt.myOutputVar)
 
 * Run and check that it works
+
+```yml
     - task : Bash@3
       name : fatbutt
       inputs : 
         targetType : "inline"
         script : |
           echo "Editing the value"
-          echo '##vso[task.setvariable variable=one]secondValue'
           echo '##vso[task.setvariable variable=myOutputVar;isOutput=true]newValue'
 
     - task : Bash@3
@@ -450,6 +447,7 @@ Runtime expressions ($[variables.var]) also get processed during runtime
           echo ${{ variables.one }} # outputs initialValue
           echo $(one) #outputs secondValue
           echo $(fatbutt.myOutputVar) # This right here, should be newValue
+```
 
 # Variable changes are scoped to a job level, not passed between jobs, unless you use outputs
 

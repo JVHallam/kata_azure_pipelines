@@ -18,6 +18,7 @@ stages:
           echo "${{ variables.holder }}"
 
     - task: Bash@3
+      name : fatbutt
       inputs:
         targetType: "inline"
         script: |
