@@ -15,7 +15,7 @@ stages:
         targetType: "inline"
         script: |
           echo "${{ variables.holder }}"
-          echo "$( variables.holder )"
+          echo "$( holder )"
 
     - task: Bash@3
       inputs:
@@ -28,7 +28,7 @@ stages:
         targetType: "inline"
         script: |
           echo "${{ variables.holder }}"
-          echo "$[ variables.holder ]"
+          echo "$( holder )"
 
   - job:
     dependsOn: joba
@@ -38,7 +38,7 @@ stages:
         targetType: "inline"
         script: |
           echo "${{ variables.holder }}"
-          echo "$[ variables.holder ]"
+          echo "$( holder )"
 
 - stage:
   jobs: 
@@ -48,4 +48,5 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-          echo "variable : $[ variables.holder ]"
+          echo "${{ variables.holder }}"
+          echo "$( holder )"
