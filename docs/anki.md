@@ -9,7 +9,7 @@ State that you don't want to checkout the repo on this job : Syntax?
 checkout : Occurs as the first implicit step of every JOB
 
 
-# Note the syntax ${{}} for compile time and $[] for runtime expressions.
+# Note the syntax ${{}} for compile time and $() for runtime expressions., $[] for the pre job section variables
 
 az pipelines pool list
 az pipelines pool list --organization "https://dev.azure.com/jakehallam95" 

@@ -104,3 +104,20 @@ This might actually be something else entirely:
     * terraform destroy, should take EVERYTHING down. Scale sets, pools + pipelines
 
 
+* Environment variables
+
+* Extra commands:
+    * artifacts
+    * logging commands
+
+
+## Something else
+
+[
+    { "id": 1, "a": "avalue1"},
+    { "id": 2, "a": "avalue2"},
+    { "id": 3, "a": "avalue3"}
+]
+
+foo.*.id
+It uses splat expressions!
