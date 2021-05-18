@@ -31,7 +31,7 @@ stages:
           echo "${{ variables.holder }}"
           echo $(fatbutt.holder)
 
-  - job:
+  - job: jobb
     dependsOn: joba
     variables:
         myTest: $[ dependencies.joba.outputs['fatbutt.holder'] ]
@@ -42,7 +42,7 @@ stages:
         targetType: "inline"
         script: |
           echo "${{ variables.holder }}"
-          echo "$( myTest )"
+          echo $( myTest )
 
 - stage:
   jobs: 
