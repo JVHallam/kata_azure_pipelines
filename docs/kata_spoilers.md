@@ -313,29 +313,29 @@ stages:
 
 # 4) Variables + templates
 
-## What i need from this stage
+* passing them out of tasks
+* passing them out of jobs
+* passing them out of stages
+* passing them out of templates
 
-# Passing around environment variables
+# Setting up:
+* Have a stage that echos
+* Create a variable, called holder, with a string value, with a default of "Initial Value"
 
-* How to set these during a stage
-* How to echo these in the next stage
+* Create:
+    * A stage
+        * A job
+            * A task that echos the variables compile time value, and run time value
+            * A task that sets the variables value
+            * A task that echos the variables compile time value, and run time value
 
-* They're shared between tasks?
-* They're shared between jobs?
-* They're shared between stages?
+        * A job:
+            * A task that echos the variables run time value
 
-* Create a task that sets up the environment variables
-* Create a task that echos out the same environment variable
-* Create a second job to echo that out too
+    * A stage:
+        * A task that echos the run time value
 
-* job1, task1 -> set's it up
-* job1, task2 -> Echos the value
-* job2, task1 -> also echos the value
-* stage2, job1, task1 -> also echos the value
-
-# Setting a variable:
-* Have a stage that echo s
-
+```yml
 pool:
   name : linux
 
@@ -387,6 +387,7 @@ stages:
         targetType : "inline"
         script : |
           echo $(one)# outputs initialValue
+```
 
 
 ${{ }} - Is templated - (${{ variables.var }}) get processed at compile time
@@ -485,21 +486,14 @@ Runtime expressions ($[variables.var]) also get processed during runtime
 # Passing OUT variables, from templates?
 * THE SAME THING AS ABOVE, but just have it in another file
 
-* passing variables around:
-    * output variables
-        * https://www.nigelfrank.com/blog/azure-devops-output-variables/
-    * passing variables between :
-        * Steps
-        * Jobs
-        * Stages
-
-* Passing variables from one stage, into a template for the next stage
+---
 
 * Environment variables
 
 * Extra commands:
     * artifacts
     * logging commands
+
 
 ## Something else
 
@@ -511,31 +505,3 @@ Runtime expressions ($[variables.var]) also get processed during runtime
 
 foo.*.id
 It uses splat expressions!
-
-#conditional insertion
-  ${{ if eq(variables['Build.SourceBranchName'], 'main') }}: # only works if you have a main branch
-    stageName: prod
-
-
-# This will generate the fucking stuff i need! YEAH BOI!
-
-pool:
-  name : linux
-
-parameters:
-- name: 'siteCodes'
-  type: object
-  default: ['sa01', 'zz04', 'zz09']
-
-stages:
-- ${{ each siteCode in parameters.siteCodes }}:
-  - stage: Sandbox_${{siteCode}}
-    displayName: Echo a the site code ${{ siteCode }}
-    jobs:
-    - job:
-      steps :
-      - task : Bash@3
-        inputs :
-          targetType : "inline"
-          script : |
-            echo "Sitecode : ${{ siteCode }}"
