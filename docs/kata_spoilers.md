@@ -437,51 +437,71 @@ stages:
       echo $(fatbutt.holder)
 ```
 
+* Update stage 1, job 2, task 1 -> Have it echo the stuff
 ```yml
+- job: check
+dependsOn: run
+variables:
+  myTest: $[ dependencies.run.outputs['fatbutt.myOutputVar'] ]
+steps:
+- checkout: none
+- task: Bash@3
+  inputs:
+    targetType: "inline"
+    script: |
+      echo "${{ variables.holder }}"
+      echo $(myTest)
+```
+
+```yml
+# Completed:
+stages:
+- stage:
+  jobs: 
   - job: run
     steps:
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-          echo ${{ variables.one }} # outputs initialValue
-          echo $(one)
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ variables.holder }}"
 
-    - task : Bash@3
+    - task: Bash@3
       name : fatbutt
-      inputs : 
-        targetType : "inline"
-        script : |
-          echo "Editing the value"
-          echo '##vso[task.setvariable variable=one]secondValue'
-          echo '##vso[task.setvariable variable=myOutputVar;isOutput=true]newValue'
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "##vso[task.setvariable variable=myOutputVar;isOutput=true]Updated Value"
 
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-          echo ${{ variables.one }} # outputs initialValue
-          echo $(one) #outputs secondValue
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ variables.holder }}"
           echo $(fatbutt.myOutputVar)
 
   - job: check
-    dependsOn : run
-    variables : 
-      #myTest : "this is my test"
-      myTest : $[ dependencies.run.outputs['fatbutt.myOutputVar'] ]
+    dependsOn: run
+    variables:
+      myTest: $[ dependencies.run.outputs['fatbutt.myOutputVar'] ]
     steps:
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-          echo $(one) # outputs initialValue
-          
-          # Try and get this to be newValue
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ variables.holder }}"
           echo $(myTest)
 ```
 
 # Passing OUT variables, on a stage level
+* name both stages
+* make stage 2, depend on stage 1
+* Declare a stage variable, called from first
+* Grab the output variable from the first
 
+```yml
 - stage: second
   dependsOn : first
   variables:
@@ -496,6 +516,7 @@ stages:
         script : |
           echo "from first $(fromFirst)"
           echo $(fromFirst)
+```
 
 # Passing OUT variables, from templates?
 * THE SAME THING AS ABOVE, but just have it in another file

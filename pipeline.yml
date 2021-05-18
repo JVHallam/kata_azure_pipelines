@@ -6,7 +6,7 @@ variables:
   value: Initial Value
 
 stages:
-- stage:
+- stage: first
   jobs: 
   - job: run
     steps:
@@ -44,7 +44,10 @@ stages:
           echo "${{ variables.holder }}"
           echo $(myTest)
 
-- stage:
+- stage: second
+  dependsOn: first
+  variables:
+    fromFirst : $[ stageDependencies.first.run.outputs['fatbutt.myOutputVar'] ]
   jobs: 
   - job:
     steps:
@@ -54,4 +57,4 @@ stages:
         targetType: "inline"
         script: |
           echo "${{ variables.holder }}"
-          echo "$( holder )"
+          echo "$(fromFirst)"
