@@ -423,6 +423,20 @@ stages:
 * Setup the out variable, to pass it from Stage 1, job 1, to stage 1, job 2
     echo "##vso[task.setvariable variable=holder;isOutput=true]Updated Value"
 
+* Update the echo task, to also keep it echoing the updated value
+    * stage 1, job 1, task 3 -> Keep it echoing:
+        * Initial Value
+        * Updated Value
+
+```yml
+- task: Bash@3
+  inputs:
+    targetType: "inline"
+    script: |
+      echo "${{ variables.holder }}"
+      echo $(fatbutt.holder)
+```
+
 ```yml
   - job: run
     steps:

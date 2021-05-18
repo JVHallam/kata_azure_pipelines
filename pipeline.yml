@@ -29,12 +29,12 @@ stages:
         targetType: "inline"
         script: |
           echo "${{ variables.holder }}"
-          echo $(holder)
+          echo $(fatbutt.holder)
 
   - job:
     dependsOn: joba
     variables:
-        holder : $[ dependencies.joba.outputs['fatbutt.holder'] ]
+        myTest: $[ dependencies.joba.outputs['fatbutt.holder'] ]
     steps:
     - checkout: none
     - task: Bash@3
@@ -42,7 +42,7 @@ stages:
         targetType: "inline"
         script: |
           echo "${{ variables.holder }}"
-          echo "$( holder )"
+          echo "$( myTest )"
 
 - stage:
   jobs: 
