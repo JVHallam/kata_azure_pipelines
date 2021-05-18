@@ -34,7 +34,7 @@ stages:
   - job: jobb
     dependsOn: joba
     variables:
-        myTest: $[ dependencies.joba.outputs['fatbutt.myOutputVar'] ]
+      myTest: $[ dependencies.joba.outputs['fatbutt.myOutputVar'] ]
     steps:
     - checkout: none
     - task: Bash@3
