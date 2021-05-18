@@ -503,40 +503,88 @@ stages:
 
 ```yml
 - stage: second
-  dependsOn : first
+  dependsOn: first
   variables:
     fromFirst : $[ stageDependencies.first.run.outputs['fatbutt.myOutputVar'] ]
-  jobs:
-  - job: check
+  jobs: 
+  - job:
     steps:
-    - checkout : none
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-          echo "from first $(fromFirst)"
-          echo $(fromFirst)
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ variables.holder }}"
+          echo "$(fromFirst)"
+```
+
+```yml
+# Completed example
+
+pool:
+  name: linux
+
+variables:
+- name: holder
+  value: Initial Value
+
+stages:
+- stage: first
+  jobs: 
+  - job: run
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ variables.holder }}"
+
+    - task: Bash@3
+      name : fatbutt
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "##vso[task.setvariable variable=myOutputVar;isOutput=true]Updated Value"
+
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ variables.holder }}"
+          echo $(fatbutt.myOutputVar)
+
+  - job: check
+    dependsOn: run
+    variables:
+      myTest: $[ dependencies.run.outputs['fatbutt.myOutputVar'] ]
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ variables.holder }}"
+          echo $(myTest)
+
+- stage: second
+  dependsOn: first
+  variables:
+    fromFirst : $[ stageDependencies.first.run.outputs['fatbutt.myOutputVar'] ]
+  jobs: 
+  - job:
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ variables.holder }}"
+          echo "$(fromFirst)"
+
+
 ```
 
 # Passing OUT variables, from templates?
-* THE SAME THING AS ABOVE, but just have it in another file
-
----
-
-* Environment variables
-
-* Extra commands:
-    * artifacts
-    * logging commands
-
-
-## Something else
-
-[
-    { "id": 1, "a": "avalue1"},
-    { "id": 2, "a": "avalue2"},
-    { "id": 3, "a": "avalue3"}
-]
-
-foo.*.id
-It uses splat expressions!
+* Isolate the first stage into a template file
+* Nothing should change, it should still continue to work fine

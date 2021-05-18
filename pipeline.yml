@@ -6,44 +6,7 @@ variables:
   value: Initial Value
 
 stages:
-- stage: first
-  jobs: 
-  - job: run
-    steps:
-    - checkout: none
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "${{ variables.holder }}"
-
-    - task: Bash@3
-      name : fatbutt
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "##vso[task.setvariable variable=myOutputVar;isOutput=true]Updated Value"
-
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "${{ variables.holder }}"
-          echo $(fatbutt.myOutputVar)
-
-  - job: check
-    dependsOn: run
-    variables:
-      myTest: $[ dependencies.run.outputs['fatbutt.myOutputVar'] ]
-    steps:
-    - checkout: none
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "${{ variables.holder }}"
-          echo $(myTest)
-
+- template: extra.yml
 - stage: second
   dependsOn: first
   variables:
