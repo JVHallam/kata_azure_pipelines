@@ -325,21 +325,25 @@ stages:
 * Create:
     * A stage
         * A job
+            * A task that echos the variables compile time value
+
+                  echo "${{ variables.holder }}"
+
+            * A task that sets the variables value to "Updated Value"
+                  echo "##vso[task.setvariable variable=holder;]testvalue"
+
             * A task that echos the variables compile time value, and run time value
 
                   echo "${{ variables.holder }}"
                   echo "$( holder )"
 
-            * A task that sets the variables value to "Updated Value"
-                  echo '##vso[job.setvariable variable=holder]Updated Value'
-
-            * A task that echos the variables compile time value, and run time value
-
         * A job:
             * A task that echos the variables run time value
+                  echo "${{ variables.holder }}"
 
     * A stage:
         * A task that echos the run time value
+              echo "${{ variables.holder }}"
 
 * Tests:
     * When ran, the pipeline stages should show:
@@ -359,56 +363,59 @@ stages:
 
 ```yml
 pool:
-  name : linux
+  name: linux
 
 variables:
-- name: one
-  value: initialValue 
+- name: holder
+  value: Initial Value
 
 stages:
-- stage: first
-  jobs:
-  - job: run
+- stage:
+  jobs: 
+  - job: joba
     steps:
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-          echo ${{ variables.one }} # outputs initialValue
-          echo $(one)
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ variables.holder }}"
 
-    - task : Bash@3
-      name : fatbutt
-      inputs : 
-        targetType : "inline"
-        script : |
-          echo "Editing the value"
-          echo '##vso[job.setvariable variable=one]secondValue'
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "##vso[task.setvariable variable=holder;]testvalue"
 
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-          echo ${{ variables.one }} # outputs initialValue
-          echo $(one) #outputs secondValue
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ variables.holder }}"
+          echo $(holder)
 
-  - job: check
+  - job:
+    dependsOn: joba
     steps:
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-          echo $(one) # outputs initialValue
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ variables.holder }}"
+          echo "$( holder )"
 
-- stage: second
-  jobs:
-  - job: check
+- stage:
+  jobs: 
+  - job:
     steps:
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-          echo $(one)# outputs initialValue
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ variables.holder }}"
+          echo "$( holder )"
 ```
 
 
