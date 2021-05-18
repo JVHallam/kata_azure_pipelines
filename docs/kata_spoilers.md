@@ -419,39 +419,11 @@ stages:
 ```
 
 
-# Passing OUT variables, on a job level
-* Update the setvariable to be an output variable
-  * echo '##vso[task.setvariable variable=myOutputVar;isOutput=true]Updated Value'
-
-* give the task that runs that a name
-  * name : fatbutt
-
-* Introduce this to the check task ( not the check job )
-    * echo $(fatbutt.myOutputVar)
-
-* Run and check that it works
+# Variable changes are scoped to a job level, not passed between jobs, unless you use outputs
+* Setup the out variable, to pass it from Stage 1, job 1, to stage 1, job 2
+    echo "##vso[task.setvariable variable=holder;isOutput=true]Updated Value"
 
 ```yml
-    - task : Bash@3
-      name : fatbutt
-      inputs : 
-        targetType : "inline"
-        script : |
-          echo "Editing the value"
-          echo '##vso[task.setvariable variable=myOutputVar;isOutput=true]newValue'
-
-    - task : Bash@3
-      inputs : 
-        targetType : "inline"
-        script : |
-          echo ${{ variables.one }} # outputs initialValue
-          echo $(one) #outputs secondValue
-          echo $(fatbutt.myOutputVar) # This right here, should be newValue
-```
-
-# Variable changes are scoped to a job level, not passed between jobs, unless you use outputs
-
-# Passing OUT variables, on a job level
   - job: run
     steps:
     - task : Bash@3
@@ -492,6 +464,7 @@ stages:
           
           # Try and get this to be newValue
           echo $(myTest)
+```
 
 # Passing OUT variables, on a stage level
 
