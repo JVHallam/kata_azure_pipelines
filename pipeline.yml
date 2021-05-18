@@ -16,7 +16,7 @@ stages:
         targetType: "inline"
         script: |
           echo "${{ variables.holder }}"
-          echo $( holder )
+          echo $[ variables.holder ]
 
     - task: Bash@3
       inputs:
