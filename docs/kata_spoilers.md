@@ -326,7 +326,13 @@ stages:
     * A stage
         * A job
             * A task that echos the variables compile time value, and run time value
-            * A task that sets the variables value
+
+                  echo "${{ variables.holder }}"
+                  echo "$[ variables.holder ]"
+
+            * A task that sets the variables value to "Updated Value"
+                  echo '##vso[job.setvariable variable=holder]Updated Value'
+
             * A task that echos the variables compile time value, and run time value
 
         * A job:

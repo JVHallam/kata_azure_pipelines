@@ -8,10 +8,44 @@ variables:
 stages:
 - stage:
   jobs: 
+  - job: joba
+    steps:
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ variables.holder }}"
+          echo "$[ variables.holder ]"
+
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo '##vso[job.setvariable variable=holder]Updated Value'
+
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ variables.holder }}"
+          echo "$[ variables.holder ]"
+
+  - job:
+    dependsOn: joba
+    steps:
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ variables.holder }}"
+          echo "$[ variables.holder ]"
+
+- stage:
+  jobs: 
   - job:
     steps:
     - task: Bash@3
       inputs:
         targetType: "inline"
         script: |
-          echo "Hello world"
+          echo "variable : $[ variables.holder ]"
