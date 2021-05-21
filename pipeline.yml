@@ -10,4 +10,54 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-          echo "Hello World"
+          echo "stage 1 - job 1 - task 1"
+
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "stage 1 - job 1 - task 1"
+
+  - job: second
+    steps:
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "stage 1 - job 2 - task 1"
+
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "stage 1 - job 2 - task 1"
+
+- stage: stagetwo
+  jobs:
+  - job: first
+    steps:
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "stage 2 - job 1 - task 1"
+
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "stage 2 - job 1 - task 1"
+
+  - job: second
+    steps:
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "stage 2 - job 2 - task 1"
+
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "stage 2 - job 2 - task 1"
