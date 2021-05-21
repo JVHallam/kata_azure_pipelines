@@ -1,23 +1,13 @@
 pool:
-  name: linux
-
-variables:
-- name: holder
-  value: Initial Value
+    name: linux
 
 stages:
-- template: extra.yml
-- stage: second
-  dependsOn: first
-  variables:
-    fromFirst : $[ stageDependencies.first.run.outputs['fatbutt.myOutputVar'] ]
-  jobs: 
-  - job:
+- stage
+  jobs:
+  - job: first
     steps:
-    - checkout: none
     - task: Bash@3
       inputs:
-        targetType: "inline"
-        script: |
-          echo "${{ variables.holder }}"
-          echo "$(fromFirst)"
+          targetType: "inline"
+          script: |
+              echo "Hello World"
