@@ -6,6 +6,7 @@ stages:
   jobs:
   - job: first
     steps:
+    - checkout: none
     - task: Bash@3
       inputs:
         targetType: "inline"
@@ -16,10 +17,11 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-          echo "stage 1 - job 1 - task 1"
+          echo "stage 1 - job 1 - task 2"
 
   - job: second
     steps:
+    - checkout: none
     - task: Bash@3
       inputs:
         targetType: "inline"
@@ -30,12 +32,14 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-          echo "stage 1 - job 2 - task 1"
+          echo "stage 1 - job 2 - task 2"
 
 - stage: stagetwo
+  dependsOn: []
   jobs:
   - job: first
     steps:
+    - checkout: none
     - task: Bash@3
       inputs:
         targetType: "inline"
@@ -46,10 +50,11 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-          echo "stage 2 - job 1 - task 1"
+          echo "stage 2 - job 1 - task 2"
 
   - job: second
     steps:
+    - checkout: none
     - task: Bash@3
       inputs:
         targetType: "inline"
@@ -60,4 +65,17 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-          echo "stage 2 - job 2 - task 1"
+          echo "stage 2 - job 2 - task 2"
+
+- stage: stagethree
+  dependsOn: [ stageone, stagetwo ]
+  jobs:
+  - job: jobone
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : | 
+          echo "All completed!"
+
