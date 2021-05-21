@@ -20,6 +20,7 @@ stages:
           echo "stage 1 - job 1 - task 2"
 
   - job: second
+    dependsOn: first
     steps:
     - checkout: none
     - task: Bash@3
@@ -53,6 +54,7 @@ stages:
           echo "stage 2 - job 1 - task 2"
 
   - job: second
+    dependsOn: first
     steps:
     - checkout: none
     - task: Bash@3
