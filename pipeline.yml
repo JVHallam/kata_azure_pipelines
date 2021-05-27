@@ -2,7 +2,7 @@ pool:
     linux
 
 stages:
-- stage
+- stage: first
     jobs:
     - job: first
       steps:
