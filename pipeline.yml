@@ -6,9 +6,62 @@ stages:
   jobs:
   - job: firstjob
     steps:
+    - checkout: none
     - task: Bash@3
       inputs:
         targetType: "inline"
         script : |
-          echo "Fat PEEN"
+          echo "stage 1 - job 1 - task 1"
 
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : |
+          echo "stage 1 - job 1 - task 2"
+
+  - job: firstjob
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : |
+          echo "stage 1 - job 2 - task 1"
+
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : |
+          echo "stage 1 - job 2 - task 2"
+
+- stage: second
+  jobs:
+  - job: firstjob
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : |
+          echo "stage 2 - job 1 - task 1"
+
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : |
+          echo "stage 2 - job 1 - task 2"
+
+  - job: firstjob
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : |
+          echo "stage 2 - job 2 - task 1"
+
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : |
+          echo "stage 2 - job 2 - task 2"
