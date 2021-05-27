@@ -19,7 +19,7 @@ stages:
         script : |
           echo "stage 1 - job 1 - task 2"
 
-  - job: firstjob
+  - job: secondjob
     steps:
     - checkout: none
     - task: Bash@3
@@ -51,7 +51,7 @@ stages:
         script : |
           echo "stage 2 - job 1 - task 2"
 
-  - job: firstjob
+  - job: secondjob
     steps:
     - checkout: none
     - task: Bash@3
