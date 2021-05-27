@@ -36,6 +36,7 @@ stages:
           echo "stage 1 - job 2 - task 2"
 
 - stage: second
+  dependsOn : []
   jobs:
   - job: firstjob
     steps:
