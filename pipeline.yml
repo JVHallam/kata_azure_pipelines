@@ -1,5 +1,5 @@
-pool: 
-  linux
+pool:
+  name: linux
 
 stages:
 - stage: first
@@ -11,14 +11,4 @@ stages:
       inputs:
         targetType: "inline"
         script : |
-          echo "stage 1 - job 1 - task 1"
-
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: 'Basic(060bb414-ecdc-4591-8fa3-60a9338e9911)'
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: |
-          echo "Hello World!";
-          az storage account list;
-        addSpnToEnvironment: true
+          echo "Hello my penis"
