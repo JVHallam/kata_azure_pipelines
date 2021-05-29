@@ -13,72 +13,12 @@ stages:
         script : |
           echo "stage 1 - job 1 - task 1"
 
-    - task: Bash@3
+    - task: AzureCLI@2
       inputs:
-        targetType: "inline"
-        script : |
-          echo "stage 1 - job 1 - task 2"
-
-  - job: secondjob
-    dependsOn : firstjob
-    steps:
-    - checkout: none
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : |
-          echo "stage 1 - job 2 - task 1"
-
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : |
-          echo "stage 1 - job 2 - task 2"
-
-- stage: second
-  dependsOn : []
-  jobs:
-  - job: firstjob
-    steps:
-    - checkout: none
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : |
-          echo "stage 2 - job 1 - task 1"
-
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : |
-          echo "stage 2 - job 1 - task 2"
-
-  - job: secondjob
-    dependsOn: firstjob
-    steps:
-    - checkout: none
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : |
-          echo "stage 2 - job 2 - task 1"
-
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : |
-          echo "stage 2 - job 2 - task 2"
-
-- stage: third
-  dependsOn : 
-  - first
-  - second
-  jobs:
-  - job: first
-    steps:
-    - checkout: none
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "All done!"
+        azureSubscription: 'Basic(060bb414-ecdc-4591-8fa3-60a9338e9911)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          echo "Hello World!";
+          az storage account list;
+        addSpnToEnvironment: true
