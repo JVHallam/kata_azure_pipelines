@@ -11,4 +11,53 @@ stages:
       inputs:
         targetType: "inline"
         script : |
-          echo "Hello my penis"
+          echo "stage first - job first - task 1"
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : |
+          echo "stage first - job first - task 2"
+
+  - job: secondjob
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : |
+          echo "stage first - job second - task 1"
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : |
+          echo "stage first - job second - task 2"
+
+- stage: second
+  jobs:
+  - job: firstjob
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : |
+          echo "stage second - job first - task 1"
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : |
+          echo "stage second - job first - task 2"
+
+  - job: secondjob
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : |
+          echo "stage second - job second - task 1"
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : |
+          echo "stage second - job second - task 2"
