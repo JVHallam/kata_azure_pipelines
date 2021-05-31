@@ -140,17 +140,17 @@
 
 ## Templating
 
-* Create a pair of templates:
-    * One for the siteCode stage, 
-        * parameters:
-            * siteCode ( singular )
+* Create a template:
+    * for the sitecode stage
+    * make it take one parameter ( being the sitecode )
+    * make it a string
 
-        * Leave the each in the main template
+* Call the template from the main pipeline.yaml
 
-    * One for bonus stage
-        * Leave the conditional in the main template
+* TEST:
+    * There's no code in the in the each, other than declaring the use of a template
+    * When the pipeline is called, it results in the same effects are before
 
-* When ran, these templates should result in the same thing as before
 
 ---
 

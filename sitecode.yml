@@ -3,8 +3,8 @@ parameters:
   type: string
 
 stages:
-- stage: ${{ siteCode }}
-  condition: not(eq('${{siteCode}}', 'zz04'))
+- stage: ${{ parameters.siteCode }}
+  condition: not(eq('${{parameters.siteCode}}', 'zz04'))
   jobs:
   - job: firstjob
     steps:
@@ -13,4 +13,4 @@ stages:
       inputs:
         targetType: "inline"
         script : |
-          echo "${{ siteCode }}"
+          echo "${{ parameters.siteCode }}"
