@@ -120,19 +120,23 @@
     * Skip a stage, if it's value is zz04
 
 * TEST 
-    * Runthe pipeline with the defaults ( 3, including zz04 )
+    * Run the pipeline with the defaults ( 3, including zz04 )
     * Note that zz04 skips
     * Note that bonus is skipped
 
 * Run the pipeline with
-    * zz01, zz09, je03         -> Should have 4 stages ( including the bonus )
-    * The default 3 site codes -> Should skip one stage ( zz04 ) and create a 4th stage, the bonus stage will skip
-    * sa01, zz04, zz09, je03   -> Should have 4 stages, zz04 is skipped, it doesn't have the bonus stage
+    * zz01, zz09, je03         -> Should have 5 stages ( including the bonus ), and all run
+    * zz01, zz04, je03         -> Should have 5 stages ( including the bonus ), 3 are run, bonus and zz04 are not
 
 ## Job status check functions
 * Run the pipeline with the defaults ( including zz04 )
 * Make the bonus stage RUN even if something fails, by adding a condition
-* As of right now, if something is skipped, it is skipped
+    * As of right now, if something is skipped, it is skipped
+
+* TEST:
+    * Run the pipeline with defaults ( zz01, zz04, je03 )
+    * The pipeline should skip the zz04 stage
+    * the bonus stage should now RUN
 
 ## Templating
 
