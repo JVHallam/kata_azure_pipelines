@@ -115,13 +115,12 @@
     * default values           -> Should have 5 stages ( first, 3 generated, bonus )
     * test                     -> Should have 2 stages ( first and one generated one )
 
-
-
-## Conditions
+## Stage Conditions
 * Give the stage block a condition
-* Skip a stage, if it's value is zz04
+    * Skip a stage, if it's value is zz04
 
-* Run the pipeline with the defaults ( 3, including zz04 )
+* TEST 
+    * Runthe pipeline with the defaults ( 3, including zz04 )
     * Note that zz04 skips
     * Note that bonus is skipped
 
