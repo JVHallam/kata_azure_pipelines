@@ -21,7 +21,10 @@
 * Delete the pipeline
 * Delete the agent pool
 * Delete the vmss
-* Do this all at an agent level
+    * Do this all at an organisations level
+
+* Delete any branches:
+    * git push --delete branch-name-thing
 
 
 ---
@@ -68,6 +71,23 @@
 
 
 # 3) Ifs, fn's, each and general syntax:
+
+## Parameter:
+* Create a parameter
+* call it "siteCode"
+* set the default value to "zz01"
+* Create a stage
+    * Create a job
+        * Create a task that echos the value of that parameter
+
+* TEST:
+    * Automated Run:
+        * The automated pipeline has a task that echos zz01
+
+    * Manual run:
+        * Run the pipeline manually
+        * Set the parameter to be "TEST PARAM"
+        * The task now echos "TEST PARAM"
 
 ## Each
 * Create a parameter:

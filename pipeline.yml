@@ -6,6 +6,11 @@ parameters:
   type: string
   default: "zz01"
 
+- name: "siteCodes"
+  type: object
+  default: 
+  - "zz01"
+
 stages:
 - stage: first
   jobs:
