@@ -102,6 +102,9 @@
     * Generate a stage for each sitecode
     * echo the siteCode, like above
 
+* TEST:
+    * When ran, the pipeline should now have the inital stage + 3 new stages
+
 ## Conditional stage insertion:
 
 * Use conditional insertion to

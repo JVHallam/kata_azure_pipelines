@@ -25,7 +25,7 @@ stages:
         script : |
           echo "${{ parameters.siteCode}}"
 
-- ${{ each siteCode in parameters.siteCodes }}
+- ${{ each siteCode in parameters.siteCodes }}:
   - stage: ${{ siteCode }}
     jobs:
     - job: firstjob
