@@ -10,6 +10,8 @@ parameters:
   type: object
   default: 
   - "zz01"
+  - "zz04"
+  - "je03"
 
 stages:
 - stage: first

@@ -74,8 +74,10 @@
 
 ## Parameter:
 * Create a parameter
-* call it "siteCode"
-* set the default value to "zz01"
+    * call it "siteCode"
+    * set the default value to "zz01"
+    * Set it to be a string
+
 * Create a stage
     * Create a job
         * Create a task that echos the value of that parameter
@@ -90,12 +92,15 @@
         * The task now echos "TEST PARAM"
 
 ## Each
-* Create a parameter:
+* Create another parameter:
     * make it an array 
+    * Set it's type appropriately
     * call it "siteCodes"
     * give it the default value of : zz01, zz04, je03
        
-* Use that with each, to generate 3 stages
+* Use that with an each:
+    * Generate a stage for each sitecode
+    * echo the siteCode, like above
 
 ## Conditional stage insertion:
 
