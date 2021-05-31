@@ -238,9 +238,9 @@ condition : not(eq('${{siteCode}}','zz04'))
 ## Templating
 
 * Create a pair of templates:
-    * One for the siteCode stage, 
-        * parameters:
-            * siteCode ( singular )
+    * One for the siteCodes stage, 
+        * make it take one argument
+        * it's the siteCode ( singular )
 
         * Leave the each in the main template
 
