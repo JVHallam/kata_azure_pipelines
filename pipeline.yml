@@ -37,7 +37,7 @@ stages:
           script : |
             echo "${{ siteCode }}"
 
-- ${{ if eq(length(parameters.siteCodes),3) }}
+- ${{ if eq(length(parameters.siteCodes),3) }}:
   - stage: bonus
     jobs:
     - job: 
