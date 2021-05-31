@@ -108,13 +108,14 @@
 ## Conditional stage insertion:
 
 * Use conditional insertion to
-    * Insert an extra stage, if there's 3 parameters
+    * Insert an extra stage, if there's 3 values in the "siteCodes" parameter
     * This just echos "BONUS STAGE GET"
 
 * Run the pipeline with:
-    * sa01, zz09, je03         -> Should have 4 stages ( including the bonus )
-    * The default 3 site codes -> Should skip one stage ( zz04 ) and create a 4th stage, the bonus stage will skip
-    * sa01, zz04, zz09, je03   -> Should have 4 stages, zz04 is skipped, it doesn't have the bonus stage
+    * default values           -> Should have 5 stages ( first, 3 generated, bonus )
+    * test                     -> Should have 2 stages ( first and one generated one )
+
+
 
 ## Conditions
 * Give the stage block a condition
@@ -123,6 +124,11 @@
 * Run the pipeline with the defaults ( 3, including zz04 )
     * Note that zz04 skips
     * Note that bonus is skipped
+
+* Run the pipeline with
+    * zz01, zz09, je03         -> Should have 4 stages ( including the bonus )
+    * The default 3 site codes -> Should skip one stage ( zz04 ) and create a 4th stage, the bonus stage will skip
+    * sa01, zz04, zz09, je03   -> Should have 4 stages, zz04 is skipped, it doesn't have the bonus stage
 
 ## Job status check functions
 * Run the pipeline with the defaults ( including zz04 )
@@ -142,8 +148,6 @@
         * Leave the conditional in the main template
 
 * When ran, these templates should result in the same thing as before
-
-
 
 ---
 
