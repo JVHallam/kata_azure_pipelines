@@ -2,7 +2,7 @@ pool:
   name: linux
 
 parameters:
-- name : siteCodes
+- name : "siteCodes"
   default :
   - "zz01"
   - "zz04"
