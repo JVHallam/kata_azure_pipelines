@@ -2,11 +2,9 @@ pool:
   name: linux
 
 parameters:
-- name : "siteCodes"
-  default :
-  - "zz01"
-  - "zz04"
-  - "je03"
+- name: "siteCode"
+  type: string
+  default: "zz01"
 
 stages:
 - stage: first
@@ -18,4 +16,4 @@ stages:
       inputs:
         targetType: "inline"
         script : |
-          echo "stage first - job first - task 1"
+          echo "${{ parameters.siteCode}}"
