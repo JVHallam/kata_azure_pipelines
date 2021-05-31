@@ -1,6 +1,13 @@
 pool:
   name: linux
 
+parameters:
+- name : siteCodes
+  default :
+  - "zz01"
+  - "zz04"
+  - "je03"
+
 stages:
 - stage: first
   jobs:
