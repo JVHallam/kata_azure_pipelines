@@ -21,7 +21,10 @@
 * Delete the pipeline
 * Delete the agent pool
 * Delete the vmss
-* Do this all at an agent level
+    * Do this all at an organisations level
+
+* Delete any branches:
+    * git push --delete branch-name-thing
 
 
 ---
@@ -69,52 +72,84 @@
 
 # 3) Ifs, fn's, each and general syntax:
 
+## Parameter:
+* Create a parameter
+    * call it "siteCode"
+    * set the default value to "zz01"
+    * Set it to be a string
+
+* Create a stage
+    * Create a job
+        * Create a task that echos the value of that parameter
+
+* TEST:
+    * Automated Run:
+        * The automated pipeline has a task that echos zz01
+
+    * Manual run:
+        * Run the pipeline manually
+        * Set the parameter to be "TEST PARAM"
+        * The task now echos "TEST PARAM"
+
 ## Each
-* Create a parameter:
+* Create another parameter:
     * make it an array 
+    * Set it's type appropriately
     * call it "siteCodes"
     * give it the default value of : zz01, zz04, je03
        
-* Use that with each, to generate 3 stages
+* Use that with an each:
+    * Generate a stage for each sitecode
+    * echo the siteCode, like above
+
+* TEST:
+    * When ran, the pipeline should now have the inital stage + 3 new stages
 
 ## Conditional stage insertion:
 
 * Use conditional insertion to
-    * Insert an extra stage, if there's 3 parameters
+    * Insert an extra stage, if there's 3 values in the "siteCodes" parameter
     * This just echos "BONUS STAGE GET"
 
 * Run the pipeline with:
-    * sa01, zz09, je03         -> Should have 4 stages ( including the bonus )
-    * The default 3 site codes -> Should skip one stage ( zz04 ) and create a 4th stage, the bonus stage will skip
-    * sa01, zz04, zz09, je03   -> Should have 4 stages, zz04 is skipped, it doesn't have the bonus stage
+    * default values           -> Should have 5 stages ( first, 3 generated, bonus )
+    * test                     -> Should have 2 stages ( first and one generated one )
 
-## Conditions
+## Stage Conditions
 * Give the stage block a condition
-* Skip a stage, if it's value is zz04
+    * Skip a stage, if it's value is zz04
 
-* Run the pipeline with the defaults ( 3, including zz04 )
+* TEST 
+    * Run the pipeline with the defaults ( 3, including zz04 )
     * Note that zz04 skips
     * Note that bonus is skipped
+
+* Run the pipeline with
+    * zz01, zz09, je03         -> Should have 5 stages ( including the bonus ), and all run
+    * zz01, zz04, je03         -> Should have 5 stages ( including the bonus ), 3 are run, bonus and zz04 are not
 
 ## Job status check functions
 * Run the pipeline with the defaults ( including zz04 )
 * Make the bonus stage RUN even if something fails, by adding a condition
-* As of right now, if something is skipped, it is skipped
+    * As of right now, if something is skipped, it is skipped
+
+* TEST:
+    * Run the pipeline with defaults ( zz01, zz04, je03 )
+    * The pipeline should skip the zz04 stage
+    * the bonus stage should now RUN
 
 ## Templating
 
-* Create a pair of templates:
-    * One for the siteCode stage, 
-        * parameters:
-            * siteCode ( singular )
+* Create a template:
+    * for the sitecode stage
+    * make it take one parameter ( being the sitecode )
+    * make it a string
 
-        * Leave the each in the main template
+* Call the template from the main pipeline.yaml
 
-    * One for bonus stage
-        * Leave the conditional in the main template
-
-* When ran, these templates should result in the same thing as before
-
+* TEST:
+    * There's no code in the in the each, other than declaring the use of a template
+    * When the pipeline is called, it results in the same effects are before
 
 
 ---

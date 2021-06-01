@@ -1,0 +1,16 @@
+parameters:
+- name: siteCode
+  type: string
+
+stages:
+- stage: ${{ parameters.siteCode }}
+  condition: not(eq('${{parameters.siteCode}}', 'zz04'))
+  jobs:
+  - job: firstjob
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : |
+          echo "${{ parameters.siteCode }}"
