@@ -6,7 +6,7 @@ parameters:
   default: "zz04"
   type: string
 - name: siteCodes
-  type: Object
+  type: object
   default:
   - zz01
   - zz04
