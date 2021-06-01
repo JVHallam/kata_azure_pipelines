@@ -1,58 +1,14 @@
 pool:
-<<<<<<< HEAD
-    name: linux
+  name: linux
 
 stages:
 - stage:
   jobs:
   - job: first
-=======
-  name: linux
-
-parameters:
-- name: "siteCode"
-  type: string
-  default: "zz01"
-
-- name: "siteCodes"
-  type: object
-  default: 
-  - "zz01"
-  - "zz04"
-  - "je03"
-
-stages:
-- stage: first
-  jobs:
-  - job: firstjob
->>>>>>> 042fe44a08fcb57e73752b85ed1e5a15fb8f9c31
     steps:
     - checkout: none
     - task: Bash@3
       inputs:
         targetType: "inline"
-<<<<<<< HEAD
         script: |
           echo "Hello World!"
-=======
-        script : |
-          echo "${{ parameters.siteCode}}"
-
-- ${{ each siteCode in parameters.siteCodes }}:
-  - template: sitecode.yml
-    parameters:
-      siteCode: '${{ siteCode }}'
-
-- ${{ if eq(length(parameters.siteCodes),3) }}:
-  - stage: bonus
-    condition: always()
-    jobs:
-    - job: 
-      steps:
-      - checkout: none
-      - task: bash@3
-        inputs: 
-          targetType: "inline"
-          script : |
-            echo "BONUS GET"
->>>>>>> 042fe44a08fcb57e73752b85ed1e5a15fb8f9c31
