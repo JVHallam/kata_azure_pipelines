@@ -157,7 +157,7 @@ j Create another parameter:
 
 # 4) Variables + templates
 
-# Setting up:
+# Task level variables:
 * Create a variable:
     * called holder
     * Is a string
@@ -167,12 +167,32 @@ j Create another parameter:
     * task 1 : echos 
         * The variables compile time value
 
-    * task 2 : sets 
+    * task 2 : sets variable
         * holder to "Updated Value"
 
     * task 3 : echos:
         * The compile time value
         * The run time value
+
+* Test:
+    * When ran:
+        * Task 1 : Echo's 
+            * Initial value
+        * task 3 : Echos:
+            * Initial Value
+            * Updated Value
+
+
+# Output variables and passing things around at a job level
+* set the declared variable to be an output variable
+* check that task 3 still echos correctly
+
+* create the second job
+* it must now echo the updated value too
+
+# Output variables and passing things around at a stage level
+
+# Output variables and the use of templates
 
 ---
 
