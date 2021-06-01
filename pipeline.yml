@@ -36,10 +36,12 @@ stages:
 
   - job: updated
     dependsOn : echo
+      variables:
+        bob : $[ dependencies.echo.outputs['settingup.holder']]
     steps:
       - checkout: none
       - task: Bash@3
         inputs:
           targetType: "inline"
           script: |
-            echo "Run time : $( dependencies.echo.outputs['settingup.holder'] )"
+            echo "Run time : $(bob)"
