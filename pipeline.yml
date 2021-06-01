@@ -42,4 +42,4 @@ stages:
         inputs:
           targetType: "inline"
           script: |
-            echo "Run time : $(settingup.holder)"
+            echo "Run time : $( dependencies.echo.outputs['settingup.holder'] )"
