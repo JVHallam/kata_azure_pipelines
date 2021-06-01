@@ -211,6 +211,9 @@ j Create another parameter:
         * Echos "Updated Value"
 
 # Output variables and the use of templates
+* Isolate stage 1 into a template
+* Invoke it from the main
+* Check that everything still works
 
 ---
 
