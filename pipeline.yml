@@ -42,4 +42,4 @@ stages:
         inputs:
           targetType: "inline"
           script: |
-            echo "Run time : $(settinup.holder)"
+            echo "Run time : $(settingup.holder)"
