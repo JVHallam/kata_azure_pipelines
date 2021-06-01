@@ -36,8 +36,8 @@ stages:
 
   - job: updated
     dependsOn : echo
-      variables:
-        bob : $[ dependencies.echo.outputs['settingup.holder']]
+    variables:
+      bob : $[ dependencies.echo.outputs['settingup.holder']]
     steps:
       - checkout: none
       - task: Bash@3
