@@ -36,4 +36,16 @@ stages:
           script: |
             echo "siteCode : ${{ parameters.siteCode }}"
 
+- ${{ if eq(length( parameters.siteCodes ), 3) }}:
+  - stage: bonus_get
+    jobs:
+      - jobs:
+        steps:
+          - checkout: none
+          - task: Bash@3
+            input:
+              targetType: "inline"
+              script: |
+                echo "BONUS GET"
+
 
