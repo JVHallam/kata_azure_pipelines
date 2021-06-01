@@ -1,7 +1,7 @@
 pool:
   name: linux
 
-parameter:
+parameters:
 - name: siteCode
   default: "zz04"
   type: string
