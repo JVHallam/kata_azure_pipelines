@@ -7,7 +7,7 @@ variables:
   value : "Initial Value"
 
 stages:
-- stage:
+- stage: first
   jobs:
   - job: echo
     steps:
@@ -45,3 +45,15 @@ stages:
           targetType: "inline"
           script: |
             echo "Run time : $(bob)"
+
+- stage: last
+  variables:
+    bob : $[ stageDependencies.first.echo.outputs['settingup.holder']]
+  jobs:
+  - jobs:
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs: "inline"
+      script: |
+        echo "Runtime : $(bob)"

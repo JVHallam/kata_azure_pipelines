@@ -199,6 +199,17 @@ j Create another parameter:
 
 # Output variables and passing things around at a stage level
 
+* Create a new stage
+    * With a job
+    * with a task
+    * That echos the value of holder, that's output from the earlier task
+
+* TEST:
+    * When ran:
+        * Stage 2
+        * task 1
+        * Echos "Updated Value"
+
 # Output variables and the use of templates
 
 ---
