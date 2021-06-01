@@ -13,18 +13,21 @@ stages:
     steps:
     - checkout: none
     - task: Bash@3
+      displayName: "Initial"
       inputs:
         targetType: "inline"
         script: |
           echo "Compile time : ${{ variables.holder }}"
 
     - task: Bash@3
+      displayName: "Setting"
       inputs:
         targetType: "inline"
         script: |
           echo "##vso[task.setvariable variable=holder]Updated Value"
 
     - task: Bash@3
+      displayName: "Echo"
       inputs:
         targetType: "inline"
         script: |
