@@ -186,6 +186,7 @@ j Create another parameter:
 # Output variables and passing things around at a job level
 * set the declared variable to be an output variable
 * check that task 3 still echos correctly
+    * It shouldn't, update it so that it does
 
 * create the second job
 * it must now echo the updated value too

@@ -21,7 +21,6 @@ stages:
 
     - task: Bash@3
       name: setting
-      displayName: "Setting"
       inputs:
         targetType: "inline"
         script: |
