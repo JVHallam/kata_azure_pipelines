@@ -32,4 +32,4 @@ stages:
         targetType: "inline"
         script: |
           echo "Compile time : ${{ variables.holder }}"
-          echo "Runtime : $( settingup.holder )"
+          echo "Runtime : $(settingup.holder)"
