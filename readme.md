@@ -157,21 +157,29 @@ j Create another parameter:
 
 # 4) Variables + templates
 
-* passing them out of tasks
-* passing them out of jobs
-* passing them out of stages
-* passing them out of templates
-
 # Setting up:
-* Have a stage that echos
-* Create a variable, called holder, with a string value, with a default of "Initial Value"
+* Create a variable:
+    * called holder
+    * Is a string
+    * That contains "Initial Value"
+
+* Have a first stage, with a job, with 3 tasks:
+    * task 1 : echos 
+        * The variables compile time value
+
+    * task 2 : sets 
+        * holder to "Updated Value"
+
+    * task 3 : echos:
+        * The compile time value
+        * The run time value
+
+---
+
 
 * Create:
     * A stage
         * A job
-            * A task that echos the variables compile time value
-            * A task that sets the variables value to "Updated Value"
-            * A task that echos the variables compile time value, and run time value
 
         * A job:
             * A task that echos the variables run time value
