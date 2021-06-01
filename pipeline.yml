@@ -9,11 +9,11 @@ parameters:
 stages:
 - stage:
   jobs:
-  - job: first
+  - job: echo
     steps:
     - checkout: none
     - task: Bash@3
       inputs:
         targetType: "inline"
         script: |
-          echo "Hello World!"
+          echo "siteCode : ${{ parameters.siteCode }}"
