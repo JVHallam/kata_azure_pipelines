@@ -20,6 +20,7 @@ stages:
           echo "Compile time : ${{ variables.holder }}"
 
     - task: Bash@3
+      name: setting
       displayName: "Setting"
       inputs:
         targetType: "inline"
@@ -32,4 +33,4 @@ stages:
         targetType: "inline"
         script: |
           echo "Compile time : ${{ variables.holder }}"
-          echo "Run time : $( holder )"
+          echo "Run time : $( setting.holder )"
