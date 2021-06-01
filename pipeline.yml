@@ -1,6 +1,11 @@
 pool:
   name: linux
 
+parameter:
+- name: siteCode
+  default: "zz04"
+  type: string
+
 stages:
 - stage:
   jobs:
