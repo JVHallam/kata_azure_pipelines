@@ -25,7 +25,7 @@ stages:
           echo "siteCode : ${{ parameters.siteCode }}"
 
 - ${{ each siteCode in parameters.siteCodes }}:
-  - template: siteCode.yml
+  - template: sitecode.yml
     parameters:
       siteCode : '${{ siteCode }}'
 
