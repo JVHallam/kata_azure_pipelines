@@ -1,78 +1,8 @@
-pool: 
-  linux
+pool:
+    name: linux
 
 stages:
-- stage: first
-  jobs:
-  - job: firstjob
-    steps:
-    - checkout: none
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : |
-          echo "stage 1 - job 1 - task 1"
-
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : |
-          echo "stage 1 - job 1 - task 2"
-
-  - job: secondjob
-    dependsOn : firstjob
-    steps:
-    - checkout: none
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : |
-          echo "stage 1 - job 2 - task 1"
-
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : |
-          echo "stage 1 - job 2 - task 2"
-
-- stage: second
-  dependsOn : []
-  jobs:
-  - job: firstjob
-    steps:
-    - checkout: none
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : |
-          echo "stage 2 - job 1 - task 1"
-
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : |
-          echo "stage 2 - job 1 - task 2"
-
-  - job: secondjob
-    dependsOn: firstjob
-    steps:
-    - checkout: none
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : |
-          echo "stage 2 - job 2 - task 1"
-
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : |
-          echo "stage 2 - job 2 - task 2"
-
-- stage: third
-  dependsOn : 
-  - first
-  - second
+- stage:
   jobs:
   - job: first
     steps:
@@ -81,4 +11,4 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-          echo "All done!"
+          echo "Hello World!"
