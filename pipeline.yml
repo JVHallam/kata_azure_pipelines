@@ -25,20 +25,13 @@ stages:
           echo "siteCode : ${{ parameters.siteCode }}"
 
 - ${{ each siteCode in parameters.siteCodes }}:
-  - stage: ${{ siteCode }}
-    condition: not(eq('${{ siteCode }}', 'zz04'))
-    jobs:
-    - job: echo
-      steps:
-      - checkout: none
-      - task: Bash@3
-        inputs:
-          targetType: "inline"
-          script: |
-            echo "siteCode : ${{ parameters.siteCode }}"
+  - template: siteCode.yml
+    parameters:
+      siteCode : '${{ siteCode }}'
 
 - ${{ if eq(length( parameters.siteCodes ), 3) }}:
   - stage: bonus_get
+    condition: always()
     jobs:
       - job:
         steps:
