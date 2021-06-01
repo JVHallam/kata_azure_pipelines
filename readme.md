@@ -215,55 +215,8 @@ j Create another parameter:
 * Invoke it from the main
 * Check that everything still works
 
----
-
-
-* Create:
-    * A stage
-        * A job
-
-        * A job:
-            * A task that echos the variables run time value
-                  echo "${{ variables.holder }}"
-
-    * A stage:
-        * A task that echos the run time value
-
-* Tests:
-    * When ran, the pipeline stages should show:
-        * Stage A - Job 1 - task 1:
-            * Initial Value
-            * Initial Value
-
-        * Stage A - Job 1 - task 3:
-            * Initial Value
-            * Updated Value
-
-        * Stage A - Job 2 - task 1:
-            * Initial Value
-
-        * Stage B - Job 1 - task 1:
-            * Initial Value
-
-
-
-# Variable changes are scoped to a job level, not passed between jobs, unless you use outputs
-* Setup the out variable, to pass it from Stage 1, job 1, to stage 1, job 2
-    echo "##vso[task.setvariable variable=holder;isOutput=true]Updated Value"
-
-* Update the echo task, to also keep it echoing the updated value
-    * stage 1, job 1, task 3 -> Keep it echoing:
-        * Initial Value
-        * Updated Value
-
-* Update stage 1, job 2, task 1 -> Have it echo the stuff
-
-# Passing OUT variables, on a stage level
-* name both stages
-* make stage 2, depend on stage 1
-* Declare a stage variable, called from first
-* Grab the output variable from the first
-
-# Passing OUT variables, from templates?
-* Isolate the first stage into a template file
-* Nothing should change, it should still continue to work fine
+* TEST:
+    * When ran:
+        * Stage 2
+        * task 1
+        * echos "Updated Value"
