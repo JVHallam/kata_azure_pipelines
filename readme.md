@@ -191,6 +191,12 @@ j Create another parameter:
 * create the second job
 * it must now echo the updated value too
 
+* TEST:
+    * when ran:
+        * Job 2:
+            * Can access the holder variable from the first task
+            * It must echo "Updated Value"
+
 # Output variables and passing things around at a stage level
 
 # Output variables and the use of templates

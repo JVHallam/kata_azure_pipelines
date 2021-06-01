@@ -33,3 +33,13 @@ stages:
         script: |
           echo "Compile time : ${{ variables.holder }}"
           echo "Runtime : $(settingup.holder)"
+
+  - job: updated
+    dependsOn : echo
+    steps:
+      - checkout: none
+      - task: Bash@3
+        inputs:
+          targetType: "inline"
+          script: |
+            echo "Run time : $(settinup.holder)"
