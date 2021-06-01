@@ -20,11 +20,11 @@ stages:
           echo "Compile time : ${{ variables.holder }}"
 
     - task: Bash@3
-      name: setting
+      name: settingup
       inputs:
         targetType: "inline"
         script: |
-          echo "##vso[task.setvariable variable=holder; isOutput=true]Updated Value"
+          echo "##vso[task.setvariable variable=holder;isOutput=true]Updated Value"
 
     - task: Bash@3
       displayName: "Echo"
@@ -32,4 +32,4 @@ stages:
         targetType: "inline"
         script: |
           echo "Compile time : ${{ variables.holder }}"
-          echo $(setting.holder)
+          echo "Runtime : $(settingup.holder)"
