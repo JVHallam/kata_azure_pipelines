@@ -4,7 +4,6 @@ pool:
    
 variables:
 - name: holder
-  type: string
   value : "Initial Value"
 
 stages:
