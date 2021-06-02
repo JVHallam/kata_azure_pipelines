@@ -18,6 +18,7 @@ stages:
             echo "Initial Value : ${{ variables.holder }}"
 
     - task: Bash@3
+      name: set
       inputs:
         targetType: "inline"
         script : | 
@@ -29,4 +30,14 @@ stages:
         script : | 
           echo "Initial Value : ${{ variables.holder }}"
           echo "Updated : $(holder)"
-          echo "Updated : $(holder)"
+
+  - job: echocheck
+    variables:
+      holder: $[ dependencies.echosetup.outputs['set.holder']]
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : | 
+          echo "Holder : $(holder)"
