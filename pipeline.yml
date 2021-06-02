@@ -32,8 +32,10 @@ stages:
           echo "Updated : $(set.holder)"
 
   - job: echocheck
+    dependsOn:
+    - echosetup
     variables:
-      holder: $[ dependencies.echosetup.outputs['set.holder']]
+      holder: "$[ dependencies.echosetup.outputs['set.holder']]"
     steps:
     - checkout: none
     - task: Bash@3
