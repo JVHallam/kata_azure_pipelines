@@ -1,4 +1,8 @@
 git pull;
+if( $? -eq $False ){
+    exit;
+}
+
 git add .;
 git commit -m "Updated pipelines";
 git push;
