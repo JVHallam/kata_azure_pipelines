@@ -43,3 +43,22 @@ stages:
         targetType: "inline"
         script : | 
           echo "Holder : $(holder)"
+
+
+- stage: stagetwo
+  dependsOn:
+  - setup
+  variables:
+    holder : "$[ stageDependencies.setup.echosetup.outputs['set.holder']]"
+  jobs:
+  - job: anotherechocheck
+    dependsOn:
+    - echosetup
+    variables:
+      holder : "jobholder"
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : | 
+          echo "Holder : $(holder)"
