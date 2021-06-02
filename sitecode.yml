@@ -1,39 +1,31 @@
 stages:
-- stage: first
+- stage: setup
   jobs:
-  - job: echo
+  - job: echosetup
     steps:
     - checkout: none
     - task: Bash@3
-      displayName: "Initial"
+      name: set
       inputs:
         targetType: "inline"
-        script: |
-          echo "Compile time : ${{ variables.holder }}"
-
-    - task: Bash@3
-      name: settingup
-      inputs:
-        targetType: "inline"
-        script: |
+        script : | 
           echo "##vso[task.setvariable variable=holder;isOutput=true]Updated Value"
 
     - task: Bash@3
-      displayName: "Echo"
       inputs:
         targetType: "inline"
-        script: |
-          echo "Compile time : ${{ variables.holder }}"
-          echo "Runtime : $(settingup.holder)"
+        script : | 
+          echo "Updated : $(set.holder)"
 
-  - job: updated
-    dependsOn : echo
+  - job: echocheck
+    dependsOn:
+    - echosetup
     variables:
-      bob : $[ dependencies.echo.outputs['settingup.holder']]
+      holder: "$[ dependencies.echosetup.outputs['set.holder']]"
     steps:
-      - checkout: none
-      - task: Bash@3
-        inputs:
-          targetType: "inline"
-          script: |
-            echo "Run time : $(bob)"
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script : | 
+          echo "Holder : $(holder)"

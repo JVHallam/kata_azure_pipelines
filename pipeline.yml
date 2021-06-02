@@ -6,45 +6,7 @@ variables:
   value: "Initial Value"
 
 stages:
-- stage: setup
-  jobs:
-  - job: echosetup
-    steps:
-    - checkout: none
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : | 
-            echo "Initial Value : ${{ variables.holder }}"
-
-    - task: Bash@3
-      name: set
-      inputs:
-        targetType: "inline"
-        script : | 
-          echo "##vso[task.setvariable variable=holder;isOutput=true]Updated Value"
-
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : | 
-          echo "Initial Value : ${{ variables.holder }}"
-          echo "Updated : $(set.holder)"
-
-  - job: echocheck
-    dependsOn:
-    - echosetup
-    variables:
-      holder: "$[ dependencies.echosetup.outputs['set.holder']]"
-    steps:
-    - checkout: none
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : | 
-          echo "Holder : $(holder)"
-
-
+- template: sitecode.yml
 - stage: stagetwo
   dependsOn:
   - setup
@@ -52,8 +14,6 @@ stages:
     holder : "$[ stageDependencies.setup.echosetup.outputs['set.holder']]"
   jobs:
   - job: anotherechocheck
-    variables:
-      holder : "jobholder"
     steps:
     - checkout: none
     - task: Bash@3
