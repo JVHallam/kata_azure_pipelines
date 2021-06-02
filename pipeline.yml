@@ -52,8 +52,6 @@ stages:
     holder : "$[ stageDependencies.setup.echosetup.outputs['set.holder']]"
   jobs:
   - job: anotherechocheck
-    dependsOn:
-    - echosetup
     variables:
       holder : "jobholder"
     steps:
