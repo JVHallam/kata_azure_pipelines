@@ -92,7 +92,7 @@
         * The task now echos "TEST PARAM"
 
 ## Each
-j Create another parameter:
+* Create another parameter:
     * make it an array 
     * Set it's type appropriately
     * call it "siteCodes"
