@@ -29,3 +29,4 @@ stages:
         script : | 
           echo "Initial Value : ${{ variables.holder }}"
           echo "Updated : $(holder)"
+          echo "Updated : $(holder)"
