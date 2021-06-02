@@ -22,7 +22,7 @@ stages:
       inputs:
         targetType: "inline"
         script : | 
-          echo "##vso[task.setvariable variable="holder";isOutput=true]Updated Value"
+          echo "##vso[task.setvariable variable=holder;isOutput=true]Updated Value"
 
     - task: Bash@3
       inputs:
