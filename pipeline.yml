@@ -22,6 +22,7 @@ stages:
         targetType: "inline"
         script : | 
           echo "Hello world"
+          echo "Hello world"
 
     - task: Bash@3
       inputs:
