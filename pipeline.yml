@@ -6,7 +6,7 @@ variables:
   value: "Initial Value"
 
 stages:
-- stage:
+- stage: setupstage
   jobs:
   - job: setup
     steps:
@@ -41,3 +41,19 @@ stages:
         targetType: "inline"
         script:  |
           echo "Updated : $(holder)"
+
+
+- stage: echostage
+  dependsOn:
+  - setupstage
+  variables:
+    holder : "$[ stageDependencies.setupstage.echoupdate.outputs['echoupdate.holder']]"
+  jobs:
+  - job: 
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script:  |
+          echo "$(holder)"
