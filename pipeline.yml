@@ -1,6 +1,11 @@
 pool:
   name: linux
 
+parameters:
+- name: siteCode
+  type: string
+  default: "ZZ04"
+
 stages:
 - stage:
   jobs:
@@ -11,4 +16,4 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-          echo "Hello World!"
+          echo "${{ parameters.siteCode }}"
