@@ -5,9 +5,15 @@ parameters:
 - name: siteCode
   type: string
   default: "ZZ04"
+- name: siteCodes
+  type: Object
+  default:
+  - ZZ01
+  - ZZ04
+  - JE03
 
 stages:
-- stage:
+- stage: zz04
   jobs:
   - job:
     steps:
@@ -16,4 +22,16 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-          echo "${{ parameters.siteCode }}"
+          echo "SiteCode : ${{ parameters.siteCode }}"
+
+- ${{ each siteCode in parameters.siteCodes }
+  - stage: "each_${{ siteCode }}"
+    jobs:
+    - job:
+      steps:
+      - checkout: none
+      - task: Bash@3
+        inputs:
+          targetType: "inline"
+          script: |
+            echo "SiteCode : ${{ siteCode }}"
