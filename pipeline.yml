@@ -39,6 +39,7 @@ stages:
 
 - ${{ if eq(length( parameters.siteCodes ), 3) }}:
   - stage: bonus
+    condition: always()
     jobs:
     - job:
       steps:
