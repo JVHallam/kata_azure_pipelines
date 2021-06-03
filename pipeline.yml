@@ -1,42 +1,31 @@
 pool:
   name: linux
 
-parameters:
-- name: siteCode
-  type: string
-  default: "ZZ04"
-- name: siteCodes
-  type: object
-  default:
-  - ZZ01
-  - ZZ04
-  - JE03
+variables:
+- name: holder
+  value: "Initial Value"
 
 stages:
-- stage: zz04
+- stage:
   jobs:
-  - job:
+  - job: setup
     steps:
     - checkout: none
     - task: Bash@3
       inputs:
         targetType: "inline"
-        script: |
-          echo "SiteCode : ${{ parameters.siteCode }}"
+        script:  |
+          echo "${{ variables.holder }}"
 
-- ${{ each siteCode in parameters.siteCodes }}:
-  - template: sitecode.yml
-    parameters:
-        siteCode: '${{siteCode}}'
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script:  |
+          echo "##vso[task.setvariable variable=holder]Updated Value"
 
-- ${{ if eq(length( parameters.siteCodes ), 3) }}:
-  - stage: bonus
-    condition: always()
-    jobs:
-    - job:
-      steps:
-      - task: Bash@3
-        inputs:
-          targetType: "inline"
-          script: |
-            echo BONUS GET
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script:  |
+          echo "Initial : ${{ variables.holder }}"
+          echo "Updated : $(holder)"
