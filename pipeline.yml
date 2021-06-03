@@ -6,7 +6,7 @@ parameters:
   type: string
   default: "ZZ04"
 - name: siteCodes
-  type: Object
+  type: object
   default:
   - ZZ01
   - ZZ04
@@ -24,7 +24,7 @@ stages:
         script: |
           echo "SiteCode : ${{ parameters.siteCode }}"
 
-- ${{ each siteCode in parameters.siteCodes }
+- ${{ each siteCode in parameters.siteCodes }}:
   - stage: "each_${{ siteCode }}"
     jobs:
     - job:
