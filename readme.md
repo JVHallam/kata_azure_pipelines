@@ -111,9 +111,9 @@
     * Insert an extra stage, if there's 3 values in the "siteCodes" parameter
     * This just echos "BONUS STAGE GET"
 
-* Run the pipeline with:
+* TEST: ( Run the pipeline with: )
     * default values           -> Should have 5 stages ( first, 3 generated, bonus )
-    * test                     -> Should have 2 stages ( first and one generated one )
+    * - test                   -> Should have 2 stages ( first and one generated one )
 
 ## Stage Conditions
 * Give the stage block a condition
