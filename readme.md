@@ -193,8 +193,12 @@
 
 * TEST:
     * when ran:
+        * Job 1:
+            * task 3:
+                * Can still echo the "Updated Value"
+
         * Job 2:
-            * Can access the holder variable from the first task
+            * Can access the holder variable from the first job
             * It must echo "Updated Value"
 
 # Output variables and passing things around at a stage level
