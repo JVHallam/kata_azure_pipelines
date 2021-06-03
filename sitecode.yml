@@ -1,31 +1,16 @@
+parameters:
+- name: siteCode
+  type: string
+
 stages:
-- stage: setup
+- stage: "each_${{ parameters.siteCode }}"
+  condition: not(eq('${{parameters.siteCode}}', 'ZZ04'))
   jobs:
-  - job: echosetup
-    steps:
-    - checkout: none
-    - task: Bash@3
-      name: set
-      inputs:
-        targetType: "inline"
-        script : | 
-          echo "##vso[task.setvariable variable=holder;isOutput=true]Updated Value"
-
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script : | 
-          echo "Updated : $(set.holder)"
-
-  - job: echocheck
-    dependsOn:
-    - echosetup
-    variables:
-      holder: "$[ dependencies.echosetup.outputs['set.holder']]"
+  - job:
     steps:
     - checkout: none
     - task: Bash@3
       inputs:
         targetType: "inline"
-        script : | 
-          echo "Holder : $(holder)"
+        script: |
+          echo "SiteCode : ${{ parameters.siteCode }}"
