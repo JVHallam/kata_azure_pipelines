@@ -1,5 +1,5 @@
 pool:
-  name: linux
+  name: kata
 
 variables:
 - name: holder
