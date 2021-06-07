@@ -6,6 +6,7 @@ stages:
   jobs:
   - job: job_one
     steps:
+    - checkout: none
     - task: Bash@3
       inputs:
         targetType: "inline"
@@ -20,6 +21,7 @@ stages:
 
   - job: job_two
     steps:
+    - checkout: none
     - task: Bash@3
       inputs:
         targetType: "inline"
@@ -36,6 +38,7 @@ stages:
   jobs:
   - job: job_one
     steps:
+    - checkout: none
     - task: Bash@3
       inputs:
         targetType: "inline"
@@ -50,6 +53,7 @@ stages:
 
   - job: job_two
     steps:
+    - checkout: none
     - task: Bash@3
       inputs:
         targetType: "inline"
