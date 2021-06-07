@@ -40,7 +40,7 @@ stages:
     condition: always()
     dependsOn: 
     - sitecode_${{ parameters.siteCode }}
-    - {{ each siteCode in parameters.siteCodes }}:
+    - ${{ each siteCode in parameters.siteCodes }}:
       - ${{ siteCode }}
 
     jobs:
