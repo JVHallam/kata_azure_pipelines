@@ -28,7 +28,7 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-          echo "${{ parameters.sideCodes.*.value }}"
+          echo "${{ parameters.siteCodes.*.value }}"
 
 - ${{ each siteCode in parameters.siteCodes }}:
   - template: sitecode.yml
