@@ -20,6 +20,8 @@ stages:
           echo "stage 1 - job 1 - task 2"
 
   - job: job_two
+    dependsOn:
+    - job_one
     steps:
     - checkout: none
     - task: Bash@3
@@ -35,6 +37,7 @@ stages:
           echo "stage 1 - job 2 - task 2"
 
 - stage: second
+  dependsOn: []
   jobs:
   - job: job_one
     steps:
@@ -52,6 +55,8 @@ stages:
           echo "stage 2 - job 1 - task 2"
 
   - job: job_two
+    dependsOn:
+    - job_one
     steps:
     - checkout: none
     - task: Bash@3
@@ -65,3 +70,15 @@ stages:
         targetType: "inline"
         script: |
           echo "stage 2 - job 2 - task 2"
+
+- stage: three
+  dependsOn:
+  - first
+  - second
+  steps:
+  - checkout: none
+  - task: Bash@3
+    inputs:
+      targetType: "inline"
+      script: |
+        echo "Done!"
