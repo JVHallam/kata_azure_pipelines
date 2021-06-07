@@ -24,6 +24,11 @@ stages:
         targetType: "inline"
         script: |
           echo "${{ parameters.siteCode }}"
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "${{ parameters.sideCodes.[*].value }}"
 
 - ${{ each siteCode in parameters.siteCodes }}:
   - template: sitecode.yml
