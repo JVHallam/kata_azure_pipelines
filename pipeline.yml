@@ -28,7 +28,7 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-          echo "${{ join(", ", parameters.siteCodes.*.value) }}"
+          echo "${{ join(',',parameters.siteCodes) }}"
 
 - ${{ each siteCode in parameters.siteCodes }}:
   - template: sitecode.yml
