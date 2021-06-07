@@ -43,7 +43,8 @@ stages:
     dependsOn: 
     - sitecode_${{ parameters.siteCode }}
     ${{ each siteCode in parameters.siteCodes }}
-      - ${{ siteCode }} 
+    - ${{ siteCode }} 
+
     jobs:
     - job: echo
       steps:
