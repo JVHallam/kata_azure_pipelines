@@ -101,15 +101,18 @@
 * Use that with an each:
     * Generate a stage for each sitecode
     * echo the siteCode, like above
+    * Make sure they don't depend on one another
 
 * TEST:
     * When ran, the pipeline should now have the inital stage + 3 new stages
+    * ALL 4 should run at the same time
 
 ## Conditional stage insertion:
 
 * Use conditional insertion to
     * Insert an extra stage, if there's 3 values in the "siteCodes" parameter
     * This just echos "BONUS STAGE GET"
+    * This depends on the 4 previous stages
 
 * TEST: ( Run the pipeline with: )
     * default values           -> Should have 5 stages ( first, 3 generated, bonus )
