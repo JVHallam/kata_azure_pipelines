@@ -112,7 +112,7 @@
 * Use conditional insertion to
     * Insert an extra stage, if there's 3 values in the "siteCodes" parameter
     * This just echos "BONUS STAGE GET"
-    * This depends on the 4 previous stages
+    * This depends on the 4 previous stages, not just the last of the each block
 
 * TEST: ( Run the pipeline with: )
     * default values           -> Should have 5 stages ( first, 3 generated, bonus )
