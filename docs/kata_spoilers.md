@@ -209,9 +209,27 @@ stages:
 * Use conditional insertion to
     * Insert an extra stage, if there's 3 parameters
     * This just echos "BONUS STAGE GET"
+    * Make it depend on ALL the previous stages
 
-- ${{ if eq(length(parameters.siteCodes), 3) }}: 
-    - stage:
+```yml
+- ${{ if eq(length(parameters.siteCodes), 3) }}:
+  - stage: bonus
+    dependsOn: 
+    - sitecode_${{ parameters.siteCode }}
+    - ${{ each siteCode in parameters.siteCodes }}
+      - ${{ siteCode }} 
+    jobs:
+    - job: echo
+      steps:
+      - checkout: none
+      - task: Bash@3
+        inputs:
+          targetType: "inline"
+          script: |
+            echo "Bonus Get"
+```
+
+
 
 * Run the pipeline with:
     * sa01, zz09, je03         -> Should have 4 stages ( including the bonus )
