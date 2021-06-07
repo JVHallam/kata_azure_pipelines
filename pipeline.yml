@@ -42,8 +42,9 @@ stages:
   - stage: bonus
     dependsOn: 
     - sitecode_${{ parameters.siteCode }}
-    - ${{ each siteCode in parameters.siteCodes }}
-      - "${{ siteCode }}"
+    - ${{ parameters.siteCodes[0] }}
+    - ${{ parameters.siteCodes[1] }}
+    - ${{ parameters.siteCodes[2] }}
 
     jobs:
     - job: echo
