@@ -75,10 +75,12 @@ stages:
   dependsOn:
   - first
   - second
-  steps:
-  - checkout: none
-  - task: Bash@3
-    inputs:
-      targetType: "inline"
-      script: |
-        echo "Done!"
+  jobs:
+  - job:
+    steps:
+    - checkout: none
+    - task: Bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+          echo "Done!"
