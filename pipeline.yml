@@ -40,7 +40,8 @@ stages:
 
 - ${{ if eq(length(parameters.siteCodes), 3) }}:
   - stage: bonus
-    dependsOn: join([], ${{parameters.siteCodes}})
+    dependsOn: 
+    - ${{ parameters.siteCodes[0] }}
     jobs:
     - job: echo
       steps:
