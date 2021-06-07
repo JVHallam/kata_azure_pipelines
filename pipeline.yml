@@ -39,9 +39,9 @@ stages:
   - stage: bonus
     condition: always()
     dependsOn: 
-    - sitecode_${{ parameters.siteCode }}
     - ${{ each siteCode in parameters.siteCodes }}:
       - ${{ siteCode }}
+    - sitecode_${{ parameters.siteCode }}
 
     jobs:
     - job: echo

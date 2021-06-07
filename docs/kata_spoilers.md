@@ -214,10 +214,12 @@ stages:
 ```yml
 - ${{ if eq(length(parameters.siteCodes), 3) }}:
   - stage: bonus
+    condition: always()
     dependsOn: 
+    - ${{ each siteCode in parameters.siteCodes }}:
+      - ${{ siteCode }}
     - sitecode_${{ parameters.siteCode }}
-    - ${{ each siteCode in parameters.siteCodes }}
-      - ${{ siteCode }} 
+
     jobs:
     - job: echo
       steps:
@@ -227,6 +229,8 @@ stages:
           targetType: "inline"
           script: |
             echo "Bonus Get"
+
+
 ```
 
 
