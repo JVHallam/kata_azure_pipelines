@@ -4,7 +4,7 @@ pool:
 stages:
 - stage: first
   jobs:
-  - jobs: job_one
+  - job: job_one
     steps:
     - task: Bash@3
       inputs:
