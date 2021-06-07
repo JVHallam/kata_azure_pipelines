@@ -26,20 +26,13 @@ stages:
           echo "${{ parameters.siteCode }}"
 
 - ${{ each siteCode in parameters.siteCodes }}:
-  - stage: ${{ siteCode }}
-    dependsOn: []
-    jobs:
-    - job: ${{ siteCode }}
-      steps:
-      - checkout: none
-      - task: Bash@3 
-        inputs: 
-          targetType: "inline"
-          script: | 
-            echo "${{ siteCode }}"
+  - template: sitecode.yml
+    parameters:
+      siteCode: ${{ siteCode }}
 
 - ${{ if eq(length(parameters.siteCodes), 3) }}:
   - stage: bonus
+    condition: always()
     dependsOn: 
     - sitecode_${{ parameters.siteCode }}
     - ${{ parameters.siteCodes[0] }}

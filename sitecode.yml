@@ -1,36 +1,18 @@
+parameters:
+- name: siteCode
+  type: string
+
+
 stages:
-- stage: setupstage
+- stage: ${{ parameters.siteCode }}
+  condition: not(eq('${{ parameters.siteCode }}', 'ZZ04'))
+  dependsOn: []
   jobs:
-  - job: setup
+  - job: ${{ parameters.siteCode }}
     steps:
     - checkout: none
-    - task: Bash@3
-      inputs:
+    - task: Bash@3 
+      inputs: 
         targetType: "inline"
-        script:  |
-          echo "${{ variables.holder }}"
-
-    - task: Bash@3
-      name: echoupdate
-      inputs:
-        targetType: "inline"
-        script:  |
-          echo "##vso[task.setvariable variable=holder;isOutput=true]Updated Value"
-
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script:  |
-          echo "Initial : ${{ variables.holder }}"
-          echo "Updated : $(echoupdate.holder)"
-
-  - job: check
-    dependsOn: setup
-    variables:
-      holder: "$[ dependencies.setup.outputs['echoupdate.holder']]"
-    steps:
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script:  |
-          echo "Updated : $(holder)"
+        script: | 
+          echo "${{ parameters.siteCode }}"
