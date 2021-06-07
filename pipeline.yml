@@ -40,7 +40,6 @@ stages:
 
 - ${{ if eq(length(parameters.siteCodes), 3) }}:
   - stage: bonus
-    //might need to add a depends on, sitecode_, and parameters.siteCodes, then join those 2 arrays
     dependsOn: join([], ${{parameters.siteCodes}})
     jobs:
     - job: echo
