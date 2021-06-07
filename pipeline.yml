@@ -1,24 +1,14 @@
 pool:
   name: linux
 
-variables:
-- name: holder
-  value: "Initial Value"
-
 stages:
-- template: sitecode.yml
-- stage: echostage
-  dependsOn:
-  - setupstage
-  variables:
-    holder: "$[stageDependencies.setupstage.setup.outputs['echoupdate.holder']]"
-
+- stage: first
   jobs:
-  - job: 
+  - jobs: job_one
     steps:
-    - checkout: none
     - task: Bash@3
       inputs:
         targetType: "inline"
-        script:  |
-          echo "Updated: $(holder)"
+        script: |
+          echo "Hello World"
+
