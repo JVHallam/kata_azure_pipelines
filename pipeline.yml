@@ -40,9 +40,8 @@ stages:
     condition: always()
     dependsOn: 
     - sitecode_${{ parameters.siteCode }}
-    - ${{ parameters.siteCodes[0] }}
-    - ${{ parameters.siteCodes[1] }}
-    - ${{ parameters.siteCodes[2] }}
+    - {{ each siteCode in parameters.siteCodes.*.value }}
+      - "${{ siteCode }}"
 
     jobs:
     - job: echo
