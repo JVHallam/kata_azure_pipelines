@@ -41,7 +41,9 @@ stages:
 - ${{ if eq(length(parameters.siteCodes), 3) }}:
   - stage: bonus
     dependsOn: 
-    - ${{ parameters.siteCodes[0] }}
+    - sitecode_${{ parameters.siteCode }}
+    - ${{ each siteCode in parameters.siteCodes }}
+      - ${{ siteCode }} 
     jobs:
     - job: echo
       steps:
