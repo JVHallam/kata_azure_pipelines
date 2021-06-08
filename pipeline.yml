@@ -1,55 +1,18 @@
 pool:
   name: linux
 
-parameters:
-- name: siteCode
-  type: string
-  default: zz01
-
-- name: siteCodes
-  type: object
-  default:
-  - ZZ01
-  - ZZ04
-  - JE03
+variables:
+- name: holder
+  value: "Default Value"
 
 stages:
-- stage: sitecode_${{parameters.siteCode}}
+- stage: setup
   jobs:
-  - job: ${{ parameters.siteCode }}
+  - job: jobone
     steps:
     - checkout: none
     - task: Bash@3
-      inputs:
+      inputs: 
         targetType: "inline"
         script: |
-          echo "${{ parameters.siteCode }}"
-    - task: Bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "${{ join(',',parameters.siteCodes.*.value) }}"
-
-- ${{ each siteCode in parameters.siteCodes }}:
-  - template: sitecode.yml
-    parameters:
-      siteCode: ${{ siteCode }}
-
-- ${{ if eq(length(parameters.siteCodes), 3) }}:
-  - stage: bonus
-    dependsOn: 
-    - ${{ each siteCode in parameters.siteCodes }}:
-      - ${{ siteCode }}
-    - sitecode_${{ parameters.siteCode }}
-
-    jobs:
-    - job: echo
-      steps:
-      - checkout: none
-      - task: Bash@3
-        inputs:
-          targetType: "inline"
-          script: |
-            echo "Bonus Get"
-
-
+          echo "Hello World!"
