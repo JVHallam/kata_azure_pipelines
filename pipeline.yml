@@ -6,43 +6,7 @@ variables:
   value: "Default Value"
 
 stages:
-- stage: setup
-  jobs:
-  - job: jobone
-    steps:
-    - checkout: none
-    - task: Bash@3
-      inputs: 
-        targetType: "inline"
-        script: |
-          echo "Holder Compiled:  ${{ variables.holder }}"
-
-    - task: Bash@3
-      name: setup
-      inputs: 
-        targetType: "inline"
-        script: |
-          echo "##vso[task.setvariable variable=holder;isOutput=true]Updated"
-
-    - task: Bash@3
-      inputs: 
-        targetType: "inline"
-        script: |
-          echo "Holder Compiled: ${{ variables.holder }}"
-          echo "Holder Runtime: $(setup.holder)"
-
-  - job: jobtwo
-    dependsOn: jobone
-    variables:
-      holder: "$[ dependencies.jobone.outputs['setup.holder']]"
-    steps:
-    - checkout: none
-    - task: Bash@3
-      inputs: 
-        targetType: "inline"
-        script: |
-          echo "Holder:  $(holder)"
-
+- template: sitecode.yml
 - stage: check
   variables:
     holder: "$[ stageDependencies.setup.jobone.outputs['setup.holder']]"
@@ -54,4 +18,4 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-          echo "$(holder)"
+          echo "Holder : $(holder)"
