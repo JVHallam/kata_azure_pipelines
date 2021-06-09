@@ -18,14 +18,27 @@ stages:
           echo "Holder Compiled:  ${{ variables.holder }}"
 
     - task: Bash@3
+      name: setup
       inputs: 
         targetType: "inline"
         script: |
-          echo "##vso[task.setvariable variable=holder]Updated"
+          echo "##vso[task.setvariable variable=holder;isOutput=true]Updated"
 
     - task: Bash@3
       inputs: 
         targetType: "inline"
         script: |
           echo "Holder Compiled: ${{ variables.holder }}"
-          echo "Holder Runtime: $(holder)"
+          echo "Holder Runtime: $(setup.holder)"
+
+  - job: jobtwo
+    dependsOn:
+    steps:
+    variables:
+      holder: "$[ dependencies.jobone.outputs['setup.holder']]"
+    - checkout: none
+    - task: Bash@3
+      inputs: 
+        targetType: "inline"
+        script: |
+          echo "Holder:  $(holder)"
