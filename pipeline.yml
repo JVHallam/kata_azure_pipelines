@@ -32,10 +32,10 @@ stages:
           echo "Holder Runtime: $(setup.holder)"
 
   - job: jobtwo
-    dependsOn:
-    steps:
+    dependsOn: jobone
     variables:
       holder: "$[ dependencies.jobone.outputs['setup.holder']]"
+    steps:
     - checkout: none
     - task: Bash@3
       inputs: 
