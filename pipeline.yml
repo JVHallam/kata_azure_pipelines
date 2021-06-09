@@ -15,7 +15,7 @@ stages:
       inputs: 
         targetType: "inline"
         script: |
-          echo "Holder Compiled: ${{ variables.holder }}"
+          echo "Holder Compiled:  ${{ variables.holder }}"
 
     - task: Bash@3
       inputs: 
