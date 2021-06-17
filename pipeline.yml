@@ -44,3 +44,17 @@ stages:
         script: |
           echo "Holder default: $(holder)"
           
+- stage: two
+  variables:
+    holder: $[stageDependencies.one.jobeone.outputs['setting.holder']]
+  dependsOn:
+  - one
+  jobs:
+  - job: 
+    steps:
+    - checkout: none
+    - task: bash@3
+      input:
+        targetType: "inline"
+        script: |
+          echo "Holder : $(holder)"
