@@ -101,7 +101,7 @@
 * Use that with an each:
     * Generate a stage for each sitecode
     * echo the siteCode, like above
-    * Make sure they don't depend on one another
+    * Make sure they don't depend on one another, so they all run at the same time
 
 * TEST:
     * When ran, the pipeline should now have the inital stage + 3 new stages

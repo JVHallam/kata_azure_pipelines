@@ -27,6 +27,7 @@ stages:
 
 - ${{ each siteCode in parameters.siteCodes }}:
   - stage: ${{ siteCode }}
+    dependsOn: []
     jobs:
     - job: 
       steps:
