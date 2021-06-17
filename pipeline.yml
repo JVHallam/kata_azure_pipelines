@@ -3,6 +3,13 @@ parameters:
   type: string
   default: JEFF
 
+- name: siteCodes
+  type: object
+  default:
+  - ZZ01
+  - ZZ04
+  - JE03
+
 pool:
     name: linux
 
