@@ -18,6 +18,7 @@ stages:
             echo "Holder default: ${{ variables.holder }}"
 
     - task: bash@3
+      name: setting
       inputs:
         targetType: "inline"
         script: |
@@ -29,3 +30,16 @@ stages:
         script: |
             echo "Holder default: ${{variables.holder}}"
             echo "Holder current: $(holder)"
+
+  - job: 
+    dependsOn: 
+    - jobeone
+    variables:
+      holder: "$[dependencies.jobeone.outputs['setting.holder']]"
+    steps:
+    - checkout: none
+    - task: bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+            echo "Holder default: ${{ variables.holder }}"
