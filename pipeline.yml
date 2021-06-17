@@ -37,3 +37,19 @@ stages:
           targetType: "inline"
           script:
             echo "SiteCode ${{ siteCode }}"
+
+- ${{ if length( parameters.siteCodes }}:
+  - stage: bonus
+    dependsOn:
+    - one
+    - ${{ each siteCode in parameters.siteCodes }}:
+      - ${{ siteCode }}
+    jobs:
+    - job: first
+      steps:
+      - checkout: none
+      - task: bash@3
+        inputs:
+          targetType: "inline"
+          script: |
+            echo BONUS
