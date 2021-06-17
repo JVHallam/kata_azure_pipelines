@@ -27,6 +27,7 @@ stages:
 
 - ${{ each siteCode in parameters.siteCodes }}:
   - stage: ${{ siteCode }}
+    condition: not(eq('ZZ04', '${{ siteCode }}'))
     dependsOn: []
     jobs:
     - job: 
