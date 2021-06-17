@@ -1,17 +1,9 @@
-parameters:
-- name: siteCode
-  type: string
-  default: JEFF
-
-- name: siteCodes
-  type: object
-  default:
-  - ZZ01
-  - ZZ04
-  - JE03
-
 pool:
     name: linux
+
+variables:
+- name: holder
+  value: "Initial Value"
 
 stages:
 - stage: one
@@ -23,26 +15,17 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-            echo "SiteCode : ${{ parameters.siteCode }}"
+            echo "Holder default: ${{ variables.holder }}"
 
-- ${{ each siteCode in parameters.siteCodes }}:
-  - template: sitecode.yml
-    parameters:
-      siteCode: '${{ siteCode }}'
+    - task: bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+            echo "##vso[task.setvariable variable=holder;]UPDATED"
 
-- ${{ if length(parameters.siteCodes) }}:
-  - stage: bonus
-    condition: always()
-    dependsOn:
-    - one
-    - ${{ each siteCode in parameters.siteCodes }}:
-      - ${{ siteCode }}
-    jobs:
-    - job: first
-      steps:
-      - checkout: none
-      - task: bash@3
-        inputs:
-          targetType: "inline"
-          script: |
-            echo BONUS
+    - task: bash@3
+      inputs:
+        targetType: "inline"
+        script: |
+            echo "Holder default: ${{variables.holder}}"
+            echo "Holder current: $(holder)"
