@@ -1,30 +1,17 @@
+parameters:
+- name: siteCode
+  type: string
+
 stages:
-- stage: setup
-  jobs:
-  - job: jobone
-    steps:
-    - checkout: none
-    - task: Bash@3
-      name: setup
-      inputs: 
-        targetType: "inline"
-        script: |
-          echo "##vso[task.setvariable variable=holder;isOutput=true]Updated"
-
-    - task: Bash@3
-      inputs: 
-        targetType: "inline"
-        script: |
-          echo "Holder Runtime: $(setup.holder)"
-
-  - job: jobtwo
-    dependsOn: jobone
-    variables:
-      holder: "$[ dependencies.jobone.outputs['setup.holder']]"
-    steps:
-    - checkout: none
-    - task: Bash@3
-      inputs: 
-        targetType: "inline"
-        script: |
-          echo "Holder: $(holder)"
+  - stage: ${{ parameters.siteCode }}
+    condition: not(eq('ZZ04', '${{ parameters.siteCode }}'))
+    dependsOn: []
+    jobs:
+    - job: 
+      steps:
+      - checkout: none
+      - task: bash@3
+        inputs:
+          targetType: "inline"
+          script:
+            echo "SiteCode ${{ parameters.siteCode }}"
