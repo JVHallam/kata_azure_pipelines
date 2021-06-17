@@ -38,7 +38,7 @@ stages:
           script:
             echo "SiteCode ${{ siteCode }}"
 
-- ${{ if length( parameters.siteCodes }}:
+- ${{ if length(parameters.siteCodes) }}:
   - stage: bonus
     dependsOn:
     - one
