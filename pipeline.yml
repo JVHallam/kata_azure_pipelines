@@ -1,21 +1,14 @@
 pool:
-  name: linux
-
-variables:
-- name: holder
-  value: "Default Value"
+    name: linux
 
 stages:
-- template: sitecode.yml
-- stage: check
-  variables:
-    holder: "$[ stageDependencies.setup.jobone.outputs['setup.holder']]"
+- stage:
   jobs:
-  - job: echocheck
+  - job: 
     steps:
     - checkout: none
-    - task: Bash@3
+    - task: bash@3
       inputs:
         targetType: "inline"
         script: |
-          echo "Holder : $(holder)"
+          echo "Hello world!"
