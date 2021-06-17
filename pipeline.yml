@@ -54,7 +54,7 @@ stages:
     steps:
     - checkout: none
     - task: bash@3
-      input:
+      inputs:
         targetType: "inline"
         script: |
           echo "Holder : $(holder)"
