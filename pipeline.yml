@@ -1,3 +1,8 @@
+parameters:
+- name: siteCode
+  type: string
+  value: JEFF
+
 pool:
     name: linux
 
@@ -11,70 +16,4 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-          echo "Hello world!"
-    - task: bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "Hello world!"
-  - job: 
-    dependsOn: 
-    - jobeone
-    steps:
-    - checkout: none
-    - task: bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "Hello world!"
-    - task: bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "Hello world!"
-
-- stage: two
-  dependsOn: []
-  jobs:
-  - job: jobeone
-    steps:
-    - checkout: none
-    - task: bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "Hello world!"
-    - task: bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "Hello world!"
-  - job: 
-    dependsOn: 
-    - jobeone
-    steps:
-    - checkout: none
-    - task: bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "Hello world!"
-    - task: bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "Hello world!"
-
-- stage:
-  dependsOn: 
-  - one
-  - two
-  jobs:
-  - job:
-    steps:
-    - checkout: none
-    - task: bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "Finished!"
+            echo "SiteCode : ${{ parameters.siteCode }}"
