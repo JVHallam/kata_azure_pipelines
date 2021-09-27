@@ -12,3 +12,13 @@ stages:
         targetType: "inline"
         script: |
             echo "Hello World"
+
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
+        deploymentScope: 'Subscription'
+        azureResourceManagerConnection: 'Basic(1)(060bb414-ecdc-4591-8fa3-60a9338e9911)'
+        subscriptionId: '060bb414-ecdc-4591-8fa3-60a9338e9911'
+        location: 'UK South'
+        templateLocation: 'Linked artifact'
+        csmFile: 'arm/deploy.json'
+        deploymentMode: 'Incremental'
