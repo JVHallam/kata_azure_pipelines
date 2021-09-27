@@ -6,7 +6,6 @@ stages:
   jobs:
   - job: 
     steps:
-    - checkout: none
     - task: bash@3
       inputs:
         targetType: "inline"
