@@ -1,54 +1,8 @@
 pool:
     name: linux
 
-variables:
-- name: holder
-  value: "Initial Value"
-
 stages:
-- stage: one
-  jobs:
-  - job: jobeone
-    steps:
-    - checkout: none
-    - task: bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-            echo "Holder default: ${{ variables.holder }}"
-
-    - task: bash@3
-      name: setting
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "##vso[task.setvariable variable=holder;isOutput=true]UPDATED"
-
-    - task: bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-            echo "Holder default: ${{variables.holder}}"
-            echo "Holder current: $(setting.holder)"
-
-  - job: 
-    dependsOn: 
-    - jobeone
-    variables:
-      holder: $[dependencies.jobeone.outputs['setting.holder']]
-    steps:
-    - checkout: none
-    - task: bash@3
-      inputs:
-        targetType: "inline"
-        script: |
-          echo "Holder default: $(holder)"
-          
-- stage: two
-  variables:
-    holder: $[stageDependencies.one.jobeone.outputs['setting.holder']]
-  dependsOn:
-  - one
+- stage: 
   jobs:
   - job: 
     steps:
@@ -57,4 +11,4 @@ stages:
       inputs:
         targetType: "inline"
         script: |
-          echo "Holder : $(holder)"
+            echo "Hello World"
